@@ -3,22 +3,20 @@ import { SectionId } from '../types';
 import { 
   Menu, 
   X, 
-  FileText, 
-  Send, 
-  Sparkles,
-  PhoneCall
+  Lock, 
+  Send
 } from 'lucide-react';
 
 interface NavbarProps {
   activeSection: SectionId;
   onNavigate: (sectionId: SectionId) => void;
-  onOpenPlanningModal: () => void;
+  onOpenAdminModal: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
   onNavigate,
-  onOpenPlanningModal,
+  onOpenAdminModal,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -106,15 +104,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right CTA Area */}
         <div className="hidden sm:flex items-center gap-2.5">
-          {/* Detailed Planning Spec Drawer Button */}
+          {/* Admin Panel Entry Button (Protected) */}
           <button
-            id="open-planning-doc-btn"
-            onClick={onOpenPlanningModal}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 border border-slate-200 hover:bg-slate-200/80 transition-all cursor-pointer"
-            title="기획서 및 구성안 보기"
+            id="open-admin-panel-btn"
+            onClick={onOpenAdminModal}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all cursor-pointer border border-slate-200/80"
+            title="관리자 전용 로그인 (기획서 관리 & 접수 내역)"
           >
-            <FileText className="w-3.5 h-3.5 text-teal-600" />
-            <span>상세 기획서</span>
+            <Lock className="w-3.5 h-3.5 text-slate-500" />
+            <span>관리자</span>
           </button>
 
           {/* Quick Consultation CTA */}
@@ -131,12 +129,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 lg:hidden">
           <button
-            id="mobile-planning-btn"
-            onClick={onOpenPlanningModal}
+            id="mobile-admin-btn"
+            onClick={onOpenAdminModal}
             className="p-2 rounded-lg text-slate-600 bg-slate-100 hover:bg-slate-200"
-            title="상세 기획서"
+            title="관리자 전용"
           >
-            <FileText className="w-4 h-4 text-teal-600" />
+            <Lock className="w-4 h-4 text-slate-600" />
           </button>
           <button
             id="mobile-menu-toggle"
@@ -171,15 +169,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
             <button
-              id="mobile-drawer-planning-doc"
+              id="mobile-drawer-admin"
               onClick={() => {
-                onOpenPlanningModal();
+                onOpenAdminModal();
                 setMobileMenuOpen(false);
               }}
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 bg-slate-100 border border-slate-200"
             >
-              <FileText className="w-4 h-4 text-teal-600" />
-              <span>전체 사이트 상세 기획서 보기</span>
+              <Lock className="w-4 h-4 text-slate-500" />
+              <span>관리자 전용 로그인 (기획서 & 문의 관리)</span>
             </button>
             <button
               id="mobile-drawer-inquiry"

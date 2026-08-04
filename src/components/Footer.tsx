@@ -1,15 +1,15 @@
 import React from 'react';
 import { SectionId } from '../types';
-import { FileText, Send, ArrowUp, Phone, Mail, Clock, ShieldCheck } from 'lucide-react';
+import { Send, ArrowUp, Mail, Clock, ShieldCheck, Lock } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (sectionId: SectionId) => void;
-  onOpenPlanningModal: () => void;
+  onOpenAdminModal: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigate,
-  onOpenPlanningModal,
+  onOpenAdminModal,
 }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Col 3: Planning Spec & Trust Guarantee */}
+          {/* Col 3: Quick Consult & Trust Guarantee */}
           <div className="lg:col-span-4 space-y-4 bg-slate-800/60 p-5 rounded-2xl border border-slate-700/80">
             <div className="flex items-center gap-2 text-teal-400 font-bold text-xs">
               <ShieldCheck className="w-4 h-4" />
@@ -95,16 +95,16 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              확인되지 않은 이력이나 과장된 숫자를 표기하지 않습니다. 전체 사이트 구성 및 상세 문구 기획서를 투명하게 공개합니다.
+              확인되지 않은 이력이나 과장된 숫자를 표기하지 않으며, 단계별 명확한 공정 안내와 완벽한 반응형 개발을 약속합니다.
             </p>
 
             <button
-              id="footer-open-planning-doc"
-              onClick={onOpenPlanningModal}
+              id="footer-open-inquiry"
+              onClick={() => onNavigate('inquiry')}
               className="w-full py-2.5 rounded-xl font-bold text-xs text-slate-900 bg-teal-400 hover:bg-teal-300 transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
             >
-              <FileText className="w-4 h-4" />
-              <span>전체 사이트 상세 기획서 열람</span>
+              <Send className="w-4 h-4" />
+              <span>실시간 견적 계산 & 맞춤 상담 신청</span>
             </button>
           </div>
 
@@ -117,7 +117,14 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <div className="flex items-center gap-4">
-            <span>모바일·PC 반응형 웹표준 준수</span>
+            <button
+              onClick={onOpenAdminModal}
+              className="text-slate-500 hover:text-slate-300 flex items-center gap-1 transition-colors cursor-pointer"
+            >
+              <Lock className="w-3 h-3" />
+              <span>관리자 전용 로그인</span>
+            </button>
+            <span>•</span>
             <button
               onClick={scrollToTop}
               className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer flex items-center gap-1"

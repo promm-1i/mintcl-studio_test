@@ -14,12 +14,10 @@ import {
 
 interface HeroSectionProps {
   onNavigate: (sectionId: SectionId) => void;
-  onOpenPlanningModal: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onNavigate,
-  onOpenPlanningModal,
 }) => {
   return (
     <section id="home-section" className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-100 overflow-hidden">
@@ -95,13 +93,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Document Spec link */}
             <div className="pt-2 text-xs text-slate-500 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-teal-600" />
-              <span>검증된 제작 가이드 및 상세 기획서가 명확하게 작성되어 있습니다.</span>
-              <button 
-                onClick={onOpenPlanningModal}
-                className="text-teal-700 underline font-semibold hover:text-teal-800 cursor-pointer"
-              >
-                기획서 확인
-              </button>
+              <span>검증된 표준 제작 규격과 투명한 공정 가이드가 적용되어 있습니다.</span>
             </div>
 
           </div>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { BRAND_SPECIFICATION, PLANNING_SECTIONS_SPEC } from '../data/planningSpecData';
+import React, { useState, useEffect } from 'react';
+import { BRAND_SPECIFICATION, PLANNING_SECTIONS_SPEC, BrandSpec } from '../data/planningSpecData';
+import { PlanningDocSection } from '../types';
 import { 
   FileText, 
   X, 
@@ -8,10 +9,7 @@ import {
   Palette, 
   Layout, 
   Layers, 
-  Type, 
-  Compass, 
-  Download,
-  Sparkles
+  Compass
 } from 'lucide-react';
 
 interface PlanningDocModalProps {
@@ -28,34 +26,51 @@ export const PlanningDocModal: React.FC<PlanningDocModalProps> = ({
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'all' | 'sections' | 'design' | 'sitemap'>('all');
 
+  const [brandData, setBrandData] = useState<BrandSpec>(BRAND_SPECIFICATION);
+  const [sectionsData, setSectionsData] = useState<PlanningDocSection[]>(PLANNING_SECTIONS_SPEC);
+
+  useEffect(() => {
+    if (isOpen) {
+      try {
+        const rawBrand = localStorage.getItem('mintcle_custom_brand_spec');
+        if (rawBrand) setBrandData(JSON.parse(rawBrand));
+
+        const rawSections = localStorage.getItem('mintcle_custom_sections_spec');
+        if (rawSections) setSectionsData(JSON.parse(rawSections));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleCopyText = () => {
     let fullText = `=========================================\n`;
-    fullText += `민트클 웹스튜디오 (Mintcle Web Studio) - 상세 기획서\n`;
+    fullText += `${brandData.brandName} - 상세 기획서\n`;
     fullText += `=========================================\n\n`;
 
     fullText += `[1. 브랜드 핵심 정의]\n`;
-    fullText += `• 브랜드명: ${BRAND_SPECIFICATION.brandName}\n`;
-    fullText += `• 타깃 고객: ${BRAND_SPECIFICATION.targetAudience}\n`;
-    fullText += `• 핵심 가치: ${BRAND_SPECIFICATION.coreValue}\n\n`;
+    fullText += `• 브랜드명: ${brandData.brandName}\n`;
+    fullText += `• 타깃 고객: ${brandData.targetAudience}\n`;
+    fullText += `• 핵심 가치: ${brandData.coreValue}\n\n`;
 
     fullText += `[2. 디자인 시스템 및 톤앤매너]\n`;
     fullText += `• 컬러 팔레트:\n`;
-    BRAND_SPECIFICATION.designDirection.colorPalette.forEach(c => {
+    brandData.designDirection.colorPalette.forEach(c => {
       fullText += `  - ${c.role}: ${c.name} (${c.hex}) - ${c.desc}\n`;
     });
-    fullText += `• 타이포그래피: ${BRAND_SPECIFICATION.designDirection.typography[0].font}\n`;
-    fullText += `• 레이아웃 그리드: ${BRAND_SPECIFICATION.designDirection.layoutGrid}\n`;
-    fullText += `• 톤앤매너: ${BRAND_SPECIFICATION.designDirection.toneAndVoice}\n\n`;
+    fullText += `• 타이포그래피: ${brandData.designDirection.typography[0].font}\n`;
+    fullText += `• 레이아웃 그리드: ${brandData.designDirection.layoutGrid}\n`;
+    fullText += `• 톤앤매너: ${brandData.designDirection.toneAndVoice}\n\n`;
 
     fullText += `[3. 전체 사이트 구성 및 정보 구조(Sitemap)]\n`;
-    BRAND_SPECIFICATION.siteMap.forEach((m, idx) => {
+    brandData.siteMap.forEach((m, idx) => {
       fullText += `${idx + 1}. ${m.name}: ${m.subSections.join(', ')}\n`;
     });
     fullText += `\n[4. 섹션별 명세 (Headlines, Body, Buttons, Design Notes)]\n\n`;
 
-    PLANNING_SECTIONS_SPEC.forEach((sec, idx) => {
+    sectionsData.forEach((sec, idx) => {
       fullText += `-----------------------------------------\n`;
       fullText += `섹션 ${idx + 1}: ${sec.sectionTitle}\n`;
       fullText += `-----------------------------------------\n`;
@@ -165,15 +180,15 @@ export const PlanningDocModal: React.FC<PlanningDocModalProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                 <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
                   <span className="font-bold text-slate-800 block">브랜드 명칭</span>
-                  <span className="text-slate-600 font-medium">{BRAND_SPECIFICATION.brandName}</span>
+                  <span className="text-slate-600 font-medium">{brandData.brandName}</span>
                 </div>
                 <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
                   <span className="font-bold text-slate-800 block">타깃 고객군</span>
-                  <span className="text-slate-600 font-medium">{BRAND_SPECIFICATION.targetAudience}</span>
+                  <span className="text-slate-600 font-medium">{brandData.targetAudience}</span>
                 </div>
                 <div className="p-3.5 bg-teal-50/60 rounded-xl border border-teal-200">
                   <span className="font-bold text-teal-900 block">핵심 가치 약속</span>
-                  <span className="text-teal-800 font-medium">{BRAND_SPECIFICATION.coreValue}</span>
+                  <span className="text-teal-800 font-medium">{brandData.coreValue}</span>
                 </div>
               </div>
             </div>
@@ -191,7 +206,7 @@ export const PlanningDocModal: React.FC<PlanningDocModalProps> = ({
               <div className="space-y-2">
                 <span className="text-xs font-bold text-slate-700 block">컬러 팔레트 (Color Tokens):</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {BRAND_SPECIFICATION.designDirection.colorPalette.map((col, idx) => (
+                  {brandData.designDirection.colorPalette.map((col, idx) => (
                     <div key={idx} className="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg shrink-0 border border-slate-300 shadow-2xs" style={{
                         backgroundColor: col.hex.includes('#0D9488') ? '#0D9488' : col.hex.includes('#0F172A') ? '#0F172A' : '#F8FAFC'
@@ -208,7 +223,7 @@ export const PlanningDocModal: React.FC<PlanningDocModalProps> = ({
 
               {/* Tone of voice */}
               <div className="p-3.5 bg-slate-100 rounded-xl text-xs text-slate-700 leading-relaxed">
-                <strong>톤앤매너 원칙:</strong> {BRAND_SPECIFICATION.designDirection.toneAndVoice}
+                <strong>톤앤매너 원칙:</strong> {brandData.designDirection.toneAndVoice}
               </div>
             </div>
           )}
@@ -222,7 +237,7 @@ export const PlanningDocModal: React.FC<PlanningDocModalProps> = ({
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {BRAND_SPECIFICATION.siteMap.map((item, idx) => (
+                {brandData.siteMap.map((item, idx) => (
                   <div key={idx} className="p-4 rounded-xl border border-slate-200 bg-slate-50/70 space-y-2 text-xs">
                     <span className="font-extrabold text-teal-800 bg-teal-100 px-2 py-0.5 rounded text-[10px]">
                       {idx + 1}. {item.name}
@@ -250,7 +265,7 @@ export const PlanningDocModal: React.FC<PlanningDocModalProps> = ({
               </h3>
 
               <div className="space-y-4">
-                {PLANNING_SECTIONS_SPEC.map((sec, idx) => (
+                {sectionsData.map((sec, idx) => (
                   <div key={sec.sectionId} className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-2xs space-y-4 text-xs">
                     
                     {/* Section Header */}

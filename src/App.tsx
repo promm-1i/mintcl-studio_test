@@ -8,12 +8,14 @@ import { ProcessSection } from './components/ProcessSection';
 import { FaqSection } from './components/FaqSection';
 import { InquirySection } from './components/InquirySection';
 import { PlanningDocModal } from './components/PlanningDocModal';
+import { AdminModal } from './components/AdminModal';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [isPlanningModalOpen, setIsPlanningModalOpen] = useState(false);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [preSelectedServiceTitle, setPreSelectedServiceTitle] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -45,7 +47,7 @@ export default function App() {
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
-        onOpenPlanningModal={() => setIsPlanningModalOpen(true)}
+        onOpenAdminModal={() => setIsAdminModalOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -54,7 +56,6 @@ export default function App() {
         {/* 1. HOME (Hero) */}
         <HeroSection
           onNavigate={handleNavigate}
-          onOpenPlanningModal={() => setIsPlanningModalOpen(true)}
         />
 
         {/* 2. 서비스 소개 (Services) */}
@@ -87,17 +88,25 @@ export default function App() {
 
       </main>
 
-      {/* Interactive Detailed Planning Document Viewer */}
+      {/* Protected Interactive Detailed Planning Document Viewer */}
       <PlanningDocModal
         isOpen={isPlanningModalOpen}
         onClose={() => setIsPlanningModalOpen(false)}
         onShowToast={showToast}
       />
 
+      {/* Admin Protected Control Panel (Inquiries & Planning Spec Editor) */}
+      <AdminModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
+        onShowToast={showToast}
+        onOpenPlanningModal={() => setIsPlanningModalOpen(true)}
+      />
+
       {/* Footer */}
       <Footer
         onNavigate={handleNavigate}
-        onOpenPlanningModal={() => setIsPlanningModalOpen(true)}
+        onOpenAdminModal={() => setIsAdminModalOpen(true)}
       />
 
       {/* Toast Notification */}
