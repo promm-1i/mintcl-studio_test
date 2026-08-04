@@ -4,7 +4,11 @@ import {
   Menu, 
   X, 
   Lock, 
-  Send
+  Send,
+  Phone,
+  MessageSquare,
+  Sparkles,
+  ChevronUp
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -23,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 40) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -34,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navItems: { id: SectionId; label: string }[] = [
-    { id: 'home', label: 'HOME' },
+    { id: 'home', label: '홈' },
     { id: 'services', label: '서비스 소개' },
     { id: 'portfolio', label: '포트폴리오' },
     { id: 'process', label: '제작 절차' },
@@ -48,148 +52,211 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header
-      id="main-navbar"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3'
-          : 'bg-white/70 backdrop-blur-xs border-b border-slate-100 py-4'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
-        <button
-          id="logo-button"
-          onClick={() => handleNavClick('home')}
-          className="flex items-center gap-2.5 text-left group cursor-pointer"
-        >
-          <div className="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:bg-teal-700 transition-colors">
-            M
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-slate-900 tracking-tight text-lg sm:text-xl font-sans">
-                민트클 <span className="text-teal-600 font-semibold">웹스튜디오</span>
-              </span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-teal-50 text-teal-700 border border-teal-200">
-                Official
-              </span>
+    <>
+      {/* Sticky Top Navigation Header */}
+      <header
+        id="main-navbar"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-md py-2.5'
+            : 'bg-white/90 backdrop-blur-sm border-b border-slate-100 py-3.5'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          
+          {/* Brand Logo */}
+          <button
+            id="logo-button"
+            onClick={() => handleNavClick('home')}
+            className="flex items-center gap-3 text-left group cursor-pointer"
+          >
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-700 via-teal-600 to-emerald-500 text-white flex items-center justify-center font-extrabold text-xl shadow-sm group-hover:scale-105 transition-transform">
+              M
             </div>
-            <p className="text-[11px] text-slate-500 hidden sm:block">
-              맞춤형 홈페이지 제작 & 상담
-            </p>
-          </div>
-        </button>
-
-        {/* Desktop Navigation Links */}
-        <nav id="desktop-nav" className="hidden lg:flex items-center gap-1">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                id={`nav-item-${item.id}`}
-                onClick={() => handleNavClick(item.id)}
-                className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                  isActive
-                    ? 'text-teal-700 bg-teal-50/80 font-semibold border border-teal-200/60'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Right CTA Area */}
-        <div className="hidden sm:flex items-center gap-2.5">
-          {/* Admin Panel Entry Button (Protected) */}
-          <button
-            id="open-admin-panel-btn"
-            onClick={onOpenAdminModal}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all cursor-pointer border border-slate-200/80"
-            title="관리자 전용 로그인 (기획서 관리 & 접수 내역)"
-          >
-            <Lock className="w-3.5 h-3.5 text-slate-500" />
-            <span>관리자</span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-extrabold text-slate-900 tracking-tight text-xl sm:text-2xl font-sans">
+                  민트클 <span className="text-teal-600 font-bold">웹스튜디오</span>
+                </span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                  Official
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 hidden sm:block font-medium">
+                맞춤형 홈페이지 제작 & 실시간 무료 견적
+              </p>
+            </div>
           </button>
 
-          {/* Quick Consultation CTA */}
-          <button
-            id="header-inquiry-cta"
-            onClick={() => handleNavClick('inquiry')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 shadow-xs transition-all cursor-pointer"
-          >
-            <Send className="w-3.5 h-3.5" />
-            <span>제작 상담 문의</span>
-          </button>
-        </div>
+          {/* Desktop Navigation Links */}
+          <nav id="desktop-nav" className="hidden lg:flex items-center gap-1.5">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+              const isInquiry = item.id === 'inquiry';
 
-        {/* Mobile Menu Button */}
-        <div className="flex items-center gap-2 lg:hidden">
-          <button
-            id="mobile-admin-btn"
-            onClick={onOpenAdminModal}
-            className="p-2 rounded-lg text-slate-600 bg-slate-100 hover:bg-slate-200"
-            title="관리자 전용"
-          >
-            <Lock className="w-4 h-4 text-slate-600" />
-          </button>
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer"
-            aria-label="메뉴 열기"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
+              if (isInquiry) {
+                return (
+                  <button
+                    key={item.id}
+                    id={`nav-item-${item.id}`}
+                    onClick={() => handleNavClick('inquiry')}
+                    className="ml-2 px-4 py-2 rounded-xl text-sm font-extrabold text-white bg-amber-500 hover:bg-amber-600 shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Send className="w-4 h-4 text-white" />
+                    <span>문의하기</span>
+                  </button>
+                );
+              }
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div id="mobile-menu-drawer" className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-5 space-y-2 shadow-lg">
-          <div className="grid grid-cols-2 gap-2 mb-3">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                id={`mobile-nav-${item.id}`}
-                onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-2.5 rounded-lg text-sm font-medium text-left transition-colors cursor-pointer ${
-                  activeSection === item.id
-                    ? 'bg-teal-50 text-teal-700 font-bold border border-teal-200'
-                    : 'text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
+              return (
+                <button
+                  key={item.id}
+                  id={`nav-item-${item.id}`}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`px-3.5 py-2 rounded-xl text-sm sm:text-base font-bold transition-all cursor-pointer ${
+                    isActive
+                      ? 'text-teal-800 bg-teal-50 font-extrabold border border-teal-200'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
 
-          <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
+          {/* Right Area Controls */}
+          <div className="hidden sm:flex items-center gap-3">
+            {/* Admin Panel Entry Button */}
             <button
-              id="mobile-drawer-admin"
-              onClick={() => {
-                onOpenAdminModal();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 bg-slate-100 border border-slate-200"
+              id="open-admin-panel-btn"
+              onClick={onOpenAdminModal}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all cursor-pointer border border-slate-200/90"
+              title="관리자 전용 로그인 (기획서 관리 & 접수 내역)"
             >
-              <Lock className="w-4 h-4 text-slate-500" />
-              <span>관리자 전용 로그인 (기획서 & 문의 관리)</span>
+              <Lock className="w-4 h-4 text-slate-600" />
+              <span>관리자</span>
             </button>
+
+            {/* Main Inquiry CTA */}
             <button
-              id="mobile-drawer-inquiry"
+              id="header-inquiry-cta"
               onClick={() => handleNavClick('inquiry')}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-extrabold text-white bg-teal-600 hover:bg-teal-700 shadow-md transition-all cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>실시간 견적 및 제작 상담 신청</span>
+              <span>제작 상담 문의</span>
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              id="mobile-admin-btn"
+              onClick={onOpenAdminModal}
+              className="p-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200"
+              title="관리자 전용"
+            >
+              <Lock className="w-5 h-5 text-slate-600" />
+            </button>
+            <button
+              id="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2.5 rounded-xl text-slate-800 hover:bg-slate-100 cursor-pointer"
+              aria-label="메뉴 열기"
+            >
+              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            </button>
+          </div>
+
+        </div>
+
+        {/* Mobile Drawer */}
+        {mobileMenuOpen && (
+          <div id="mobile-menu-drawer" className="lg:hidden bg-white border-b border-slate-200 px-5 pt-4 pb-6 space-y-3 shadow-xl">
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  id={`mobile-nav-${item.id}`}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`px-4 py-3 rounded-xl text-base font-bold text-left transition-colors cursor-pointer ${
+                    activeSection === item.id
+                      ? 'bg-teal-50 text-teal-800 font-extrabold border border-teal-200'
+                      : 'text-slate-800 hover:bg-slate-100'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-slate-200 flex flex-col gap-2.5">
+              <button
+                id="mobile-drawer-admin"
+                onClick={() => {
+                  onOpenAdminModal();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-slate-800 bg-slate-100 border border-slate-200"
+              >
+                <Lock className="w-4 h-4 text-slate-600" />
+                <span>관리자 전용 로그인 (기획서 & 문의 관리)</span>
+              </button>
+              <button
+                id="mobile-drawer-inquiry"
+                onClick={() => handleNavClick('inquiry')}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-base font-extrabold text-white bg-amber-500 hover:bg-amber-600 shadow-md"
+              >
+                <Send className="w-5 h-5 text-white" />
+                <span>문의하기 (실시간 견적 & 제작 상담)</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* PERSISTENT FLOATING QUICK NAVIGATION BANNER (Visible on scroll) */}
+      {isScrolled && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-slate-900/90 text-white backdrop-blur-md px-3 sm:px-5 py-2.5 rounded-2xl border border-slate-700/80 shadow-2xl flex items-center gap-2 sm:gap-4 max-w-[95vw]">
+          
+          <div className="hidden md:flex items-center gap-1.5 text-xs text-slate-300 pr-2 border-r border-slate-700">
+            <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+            <span className="font-bold text-white">민트클 웹스튜디오</span>
+          </div>
+
+          {/* Quick Nav Buttons */}
+          <div className="flex items-center gap-1 text-xs font-semibold">
+            {navItems.map((item) => {
+              if (item.id === 'inquiry') return null; // handled separately as big CTA
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer text-xs sm:text-sm font-medium ${
+                    activeSection === item.id
+                      ? 'bg-teal-500 text-slate-950 font-bold'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mandatory Highlighted Floating '문의하기' CTA */}
+          <button
+            id="floating-banner-inquiry-btn"
+            onClick={() => handleNavClick('inquiry')}
+            className="px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md cursor-pointer flex items-center gap-1.5 shrink-0"
+          >
+            <Send className="w-4 h-4 text-slate-950" />
+            <span>문의하기</span>
+          </button>
         </div>
       )}
-    </header>
+    </>
   );
 };
+

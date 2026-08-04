@@ -220,16 +220,34 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200">
-            <span>실시간 견적 & 상담 문의</span>
+        <div className="text-center max-w-3xl mx-auto space-y-4 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-50 text-amber-900 border border-amber-200 shadow-2xs">
+            <Sparkles className="w-4 h-4 text-amber-600" />
+            <span>실시간 견적 & 제작 상담 문의</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-sans">
-            부담 없는 <span className="text-teal-600">실시간 자동 견적산출 및 제작 문의</span>
+            부담 없는 <span className="text-teal-600">실시간 견적 산출 및 1:1 맞춤 제작 문의</span>
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            원하시는 제작 유형과 필요 옵션을 선택하여 즉시 예상 금액을 확인하시거나, 바로 맞춤 상담을 신청해 보세요.
+          <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
+            원하시는 제작 유형과 필요 옵션을 선택하여 즉시 투명한 예상 금액을 확인하시거나, 바로 맞춤 상담을 신청해 보세요.
           </p>
+        </div>
+
+        {/* Direct Contact Banner with 6gsmake@gmail.com & Operating Hours */}
+        <div className="p-4 sm:p-5 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md mb-10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shrink-0">
+              <Mail className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <div className="font-extrabold text-amber-300 text-sm sm:text-base">직접 상담 문의 이메일</div>
+              <div className="text-slate-300 font-medium">이메일 접수: <strong className="text-white font-mono text-sm sm:text-base">6gsmake@gmail.com</strong></div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 bg-slate-800 px-4 py-2.5 rounded-xl text-xs sm:text-sm text-slate-300 shrink-0 border border-slate-700">
+            <Clock className="w-4.5 h-4.5 text-teal-400 shrink-0" />
+            <span>운영시간: <strong className="text-white">평일 09:00 ~ 18:00</strong> (주말/공휴일 휴무)</span>
+          </div>
         </div>
 
         {/* Tab Selector Buttons */}

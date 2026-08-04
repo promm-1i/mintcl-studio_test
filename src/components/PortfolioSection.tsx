@@ -3,13 +3,16 @@ import { PORTFOLIO_SAMPLES } from '../data/portfolioData';
 import { PortfolioSample, SectionId } from '../types';
 import { 
   Eye, 
-  Smartphone, 
-  Monitor, 
+  ExternalLink, 
   Check, 
-  X, 
   Send, 
+  Info,
   Sparkles,
-  Info
+  Maximize2,
+  X,
+  Layers,
+  Layout,
+  CheckCircle2
 } from 'lucide-react';
 
 interface PortfolioSectionProps {
@@ -22,16 +25,15 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
   onNavigate,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [activeMockup, setActiveMockup] = useState<PortfolioSample | null>(null);
-  const [deviceMode, setDeviceMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [previewModalSample, setPreviewModalSample] = useState<PortfolioSample | null>(null);
 
   const categories = [
-    { id: 'all', label: '전체 보기' },
-    { id: 'corporate', label: '기업 홈페이지' },
-    { id: 'smallbiz', label: '소상공인 매장' },
-    { id: 'portfolio', label: '포트폴리오' },
-    { id: 'landing', label: '서비스 랜딩' },
-    { id: 'renewal', label: '리뉴얼 시안' },
+    { id: 'all', label: '전체 샘플 보기 (5종)' },
+    { id: 'cafe', label: '카페·베이커리' },
+    { id: 'company', label: '기업·B2B' },
+    { id: 'interior', label: '인테리어·건축' },
+    { id: 'beauty', label: '뷰티·헤어' },
+    { id: 'app', label: '앱 랜딩' },
   ];
 
   const filteredSamples = selectedCategory === 'all'
@@ -39,45 +41,96 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
     : PORTFOLIO_SAMPLES.filter(s => s.category === selectedCategory);
 
   const handleInquiryForSample = (sampleType: string) => {
-    setActiveMockup(null);
     onSelectServiceForInquiry(sampleType);
     onNavigate('inquiry');
   };
 
+  const handleOpenSamplePage = (path: string) => {
+    window.open(path, '_blank');
+  };
+
+  // Badge color helper
+  const getCategoryThemeClass = (category: string) => {
+    switch (category) {
+      case 'cafe':
+        return {
+          badgeBg: 'bg-amber-100 text-amber-900 border-amber-300',
+          accentBtn: 'bg-amber-600 hover:bg-amber-700 text-white',
+          tagBg: 'bg-amber-50 text-amber-800 border-amber-200/80',
+        };
+      case 'company':
+        return {
+          badgeBg: 'bg-indigo-100 text-indigo-900 border-indigo-300',
+          accentBtn: 'bg-indigo-600 hover:bg-indigo-700 text-white',
+          tagBg: 'bg-indigo-50 text-indigo-800 border-indigo-200/80',
+        };
+      case 'interior':
+        return {
+          badgeBg: 'bg-slate-800 text-slate-100 border-slate-700',
+          accentBtn: 'bg-slate-900 hover:bg-slate-800 text-white',
+          tagBg: 'bg-slate-100 text-slate-800 border-slate-300',
+        };
+      case 'beauty':
+        return {
+          badgeBg: 'bg-rose-100 text-rose-900 border-rose-300',
+          accentBtn: 'bg-rose-600 hover:bg-rose-700 text-white',
+          tagBg: 'bg-rose-50 text-rose-800 border-rose-200/80',
+        };
+      case 'app':
+        return {
+          badgeBg: 'bg-purple-100 text-purple-900 border-purple-300',
+          accentBtn: 'bg-purple-600 hover:bg-purple-700 text-white',
+          tagBg: 'bg-purple-50 text-purple-800 border-purple-200/80',
+        };
+      default:
+        return {
+          badgeBg: 'bg-teal-100 text-teal-900 border-teal-300',
+          accentBtn: 'bg-teal-600 hover:bg-teal-700 text-white',
+          tagBg: 'bg-teal-50 text-teal-800 border-teal-200/80',
+        };
+    }
+  };
+
   return (
-    <section id="portfolio-section" className="py-20 bg-slate-50 border-b border-slate-200">
+    <section id="portfolio-section" className="py-20 lg:py-28 bg-slate-50/70 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200">
-            <span>제작 가능 샘플 시안</span>
+        <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-50 text-amber-900 border border-amber-200/90 shadow-2xs">
+            <Sparkles className="w-4 h-4 text-amber-600" />
+            <span>독립 가상 홈페이지 포트폴리오</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-sans">
-            제작 가능한 <span className="text-teal-600">웹사이트 유형별 레이아웃</span>
+            실제 동작하는 <span className="text-teal-600">업종별 커스텀 샘플 홈페이지</span>
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            민트클 웹스튜디오는 허위 실적이나 가짜 숫자를 만들지 않습니다.<br />
-            대신 고객님의 비즈니스에 구현 가능한 레이아웃 시안과 정돈된 모바일 대응 구조를 투명하게 제시합니다.
+          <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
+            민트클 웹스튜디오는 말뿐인 실적을 제시하지 않습니다.<br />
+            아래의 각 포트폴리오를 크게 확인하시고, 클릭하여 <strong>독립 샘플 사이트</strong>를 경험해 보세요.
           </p>
 
-          {/* Honest Notice Banner */}
-          <div className="p-3 bg-white rounded-xl border border-teal-200/80 shadow-2xs text-xs text-slate-600 flex items-center justify-center gap-2 max-w-xl mx-auto mt-2">
-            <Info className="w-4 h-4 text-teal-600 shrink-0" />
-            <span>모든 예시는 실제 커스텀 개발이 가능한 대표 레이아웃 프로토타입입니다.</span>
+          {/* Large Visual Notice Banner */}
+          <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs text-xs sm:text-sm text-slate-700 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-3xl mx-auto mt-4">
+            <div className="flex items-center gap-2 text-teal-700 font-bold shrink-0">
+              <Info className="w-5 h-5 text-teal-600" />
+              <span>사진 & 화면 크기 대폭 확대 안내</span>
+            </div>
+            <span className="text-slate-600">
+              각 시안 이미지는 실제 홈페이지 레이아웃 목업이며, <strong>[샘플 보기 (독립 페이지)]</strong>를 누르면 완벽한 동작 페이지로 연결됩니다.
+            </span>
           </div>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
           {categories.map((cat) => (
             <button
               key={cat.id}
               id={`portfolio-filter-${cat.id}`}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 selectedCategory === cat.id
-                  ? 'bg-teal-600 text-white shadow-xs'
+                  ? 'bg-slate-900 text-white shadow-md'
                   : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
               }`}
             >
@@ -86,236 +139,215 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           ))}
         </div>
 
-        {/* Sample Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-          {filteredSamples.map((sample) => (
-            <div
-              key={sample.id}
-              className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden hover:shadow-lg transition-all flex flex-col justify-between group"
-            >
-              {/* Card Header & Simulated Visual Thumbnail */}
-              <div>
-                <div className="p-5 bg-gradient-to-br from-slate-900 to-slate-800 text-white relative">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold bg-teal-500/30 text-teal-300 border border-teal-400/30 px-2.5 py-0.5 rounded-full">
-                      {sample.type}
-                    </span>
-                    <span className="text-[10px] text-slate-300 bg-slate-800 px-2 py-0.5 rounded">
-                      {sample.colorTheme}
-                    </span>
-                  </div>
+        {/* Spacious 2-Column Showcase Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 text-left">
+          {filteredSamples.map((sample) => {
+            const theme = getCategoryThemeClass(sample.category);
 
-                  {/* Wireframe Mockup Preview */}
-                  <div className="bg-slate-950/80 rounded-lg p-3 border border-slate-700 space-y-2 mt-2">
-                    <div className="h-2 w-1/3 bg-teal-400/80 rounded" />
-                    <div className="h-1.5 w-3/4 bg-slate-600 rounded" />
-                    <div className="h-1.5 w-1/2 bg-slate-600 rounded" />
-                    <div className="pt-2 flex gap-1.5">
-                      <div className="h-8 flex-1 bg-slate-800 rounded border border-slate-700 flex items-center justify-center text-[9px] text-slate-400">
-                        {sample.mockupDetails.sections[0]?.name || 'Feature'}
-                      </div>
-                      <div className="h-8 flex-1 bg-slate-800 rounded border border-slate-700 flex items-center justify-center text-[9px] text-slate-400">
-                        {sample.mockupDetails.sections[1]?.name || 'About'}
-                      </div>
+            return (
+              <div
+                key={sample.id}
+                className="bg-white rounded-3xl border border-slate-200/90 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between group"
+              >
+                <div>
+                  
+                  {/* Browser Chrome Header Frame */}
+                  <div className="bg-slate-900 px-4 py-3 flex items-center justify-between border-b border-slate-800">
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                      <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
+                      <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
+                      <span className="text-xs font-mono font-medium text-slate-300 ml-2 hidden sm:inline">
+                        mintcle.studio{sample.samplePath}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${theme.badgeBg}`}>
+                        {sample.type}
+                      </span>
+                      <button
+                        onClick={() => setPreviewModalSample(sample)}
+                        className="text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-md transition-colors flex items-center gap-1 cursor-pointer"
+                        title="크게 확대 미리보기"
+                      >
+                        <Maximize2 className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">확대</span>
+                      </button>
                     </div>
                   </div>
+
+                  {/* PROMINENT LARGE IMAGE FRAME (Aspect 16:9 / 16:10 for High Impact) */}
+                  <div 
+                    onClick={() => handleOpenSamplePage(sample.samplePath)}
+                    className="relative aspect-[16/10] sm:aspect-[16/9] bg-slate-950 overflow-hidden cursor-pointer group/img"
+                  >
+                    <img
+                      src={sample.coverImage}
+                      alt={`${sample.title} 대형 메인 시안 이미지`}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top group-hover/img:scale-105 transition-transform duration-700"
+                    />
+
+                    {/* Hover Overlay Badge */}
+                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                      <div className="bg-slate-900/90 text-white backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 font-bold text-sm sm:text-base flex items-center gap-2 shadow-2xl">
+                        <Eye className="w-5 h-5 text-teal-400" />
+                        <span>독립 샘플 웹사이트 직접 체험하기</span>
+                        <ExternalLink className="w-4 h-4 text-slate-300" />
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-3 left-3 bg-slate-900/90 text-teal-300 border border-teal-500/40 px-3 py-1 rounded-lg text-xs font-bold shadow-md">
+                      Concept Work (실제 동작 독립시안)
+                    </div>
+                  </div>
+
+                  {/* Card Content Description Area */}
+                  <div className="p-6 sm:p-8 space-y-5">
+                    
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-teal-700 transition-colors">
+                          {sample.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm sm:text-base font-semibold text-teal-700">
+                        {sample.tagline}
+                      </p>
+                    </div>
+
+                    <p className="text-sm text-slate-700 leading-relaxed font-normal">
+                      {sample.description}
+                    </p>
+
+                    {/* Feature Tags List */}
+                    <div className="space-y-2.5 pt-3 border-t border-slate-100">
+                      <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block">
+                        주요 핵심 탑재 기능:
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {sample.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className={`text-xs font-semibold px-3 py-1.5 rounded-lg border ${theme.tagBg}`}
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
 
-                {/* Card Content */}
-                <div className="p-6 space-y-4">
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
-                      {sample.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {sample.tagline}
-                    </p>
-                  </div>
+                {/* Bottom Action Footer */}
+                <div className="p-5 sm:px-8 border-t border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row gap-3">
+                  <button
+                    id={`view-sample-btn-${sample.id}`}
+                    onClick={() => handleOpenSamplePage(sample.samplePath)}
+                    className={`flex-1 py-3.5 px-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm ${theme.accentBtn}`}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>샘플 보기 (독립 페이지)</span>
+                  </button>
 
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {sample.description}
-                  </p>
+                  <button
+                    id={`sample-inquire-btn-${sample.id}`}
+                    onClick={() => handleInquiryForSample(sample.type)}
+                    className="py-3.5 px-5 rounded-xl font-bold text-sm text-slate-800 bg-white border border-slate-300 hover:bg-slate-100 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
+                    title="이 서비스 스타일로 견적 문의"
+                  >
+                    <Send className="w-4 h-4 text-teal-600" />
+                    <span>제작 문의</span>
+                  </button>
+                </div>
 
-                  {/* Layout Features */}
-                  <div className="space-y-1.5 pt-1">
-                    <span className="text-[11px] font-bold text-slate-700 block">포함 주요 레이아웃:</span>
-                    {sample.layoutFeatures.map((feat, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 text-xs text-slate-600">
-                        <Check className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Live Preview Enlarged Modal */}
+        {previewModalSample && (
+          <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 shadow-2xl text-left p-6 sm:p-8 space-y-6 relative">
+              
+              <button
+                onClick={() => setPreviewModalSample(null)}
+                className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="space-y-2">
+                <span className="px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+                  {previewModalSample.type}
+                </span>
+                <h3 className="text-2xl font-extrabold text-slate-900">
+                  {previewModalSample.title}
+                </h3>
+                <p className="text-sm font-medium text-slate-600">
+                  {previewModalSample.tagline}
+                </p>
+              </div>
+
+              {/* Large Image View */}
+              <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-900">
+                <img
+                  src={previewModalSample.coverImage}
+                  alt={previewModalSample.title}
+                  className="w-full h-auto max-h-[500px] object-cover"
+                />
+              </div>
+
+              <div className="space-y-3 text-sm text-slate-700 leading-relaxed">
+                <h4 className="font-bold text-slate-900 text-base">시안 상세 개요</h4>
+                <p>{previewModalSample.description}</p>
+              </div>
+
+              {/* Layout Features */}
+              <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <h4 className="font-bold text-slate-900 text-xs uppercase">포함된 주요 레이아웃 구조</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                  {previewModalSample.layoutFeatures.map((feat, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Card Footer Action */}
-              <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex gap-2">
+              <div className="pt-4 flex gap-3">
                 <button
-                  id={`view-mockup-btn-${sample.id}`}
-                  onClick={() => setActiveMockup(sample)}
-                  className="flex-1 py-2.5 rounded-xl font-bold text-xs text-slate-800 bg-white border border-slate-300 hover:bg-slate-100 hover:border-slate-400 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+                  onClick={() => {
+                    handleOpenSamplePage(previewModalSample.samplePath);
+                    setPreviewModalSample(null);
+                  }}
+                  className="flex-1 py-3.5 rounded-xl font-bold text-sm text-white bg-teal-600 hover:bg-teal-700 flex items-center justify-center gap-2"
                 >
-                  <Eye className="w-3.5 h-3.5 text-teal-600" />
-                  <span>시안 미리보기</span>
+                  <ExternalLink className="w-4 h-4" />
+                  <span>독립 샘플 웹사이트 새 창으로 열기</span>
                 </button>
                 <button
-                  id={`sample-inquire-btn-${sample.id}`}
-                  onClick={() => handleInquiryForSample(sample.type)}
-                  className="px-3.5 py-2.5 rounded-xl font-bold text-xs text-white bg-teal-600 hover:bg-teal-700 transition-all cursor-pointer flex items-center justify-center"
-                  title="이 유형으로 문의"
+                  onClick={() => {
+                    handleInquiryForSample(previewModalSample.type);
+                    setPreviewModalSample(null);
+                  }}
+                  className="px-6 py-3.5 rounded-xl font-bold text-sm text-slate-800 bg-slate-100 hover:bg-slate-200"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  제작 문의하기
                 </button>
               </div>
 
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
       </div>
-
-      {/* Interactive Mockup Preview Modal */}
-      {activeMockup && (
-        <div id="mockup-preview-modal" className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-200 text-left">
-            
-            {/* Modal Header */}
-            <div className="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between">
-              <div>
-                <span className="text-xs font-bold text-teal-400 bg-teal-900/60 px-2 py-0.5 rounded border border-teal-700/50">
-                  {activeMockup.type} 시안 프로토타입
-                </span>
-                <h3 className="text-lg font-bold text-white mt-1">
-                  {activeMockup.title}
-                </h3>
-              </div>
-
-              {/* Device Mode Switcher */}
-              <div className="flex items-center gap-3">
-                <div className="bg-slate-800 p-1 rounded-lg flex items-center gap-1 border border-slate-700">
-                  <button
-                    onClick={() => setDeviceMode('desktop')}
-                    className={`px-2.5 py-1 rounded text-xs font-semibold flex items-center gap-1 cursor-pointer ${
-                      deviceMode === 'desktop'
-                        ? 'bg-teal-600 text-white'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Monitor className="w-3.5 h-3.5" />
-                    <span>PC 뷰</span>
-                  </button>
-                  <button
-                    onClick={() => setDeviceMode('mobile')}
-                    className={`px-2.5 py-1 rounded text-xs font-semibold flex items-center gap-1 cursor-pointer ${
-                      deviceMode === 'mobile'
-                        ? 'bg-teal-600 text-white'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Smartphone className="w-3.5 h-3.5" />
-                    <span>모바일 뷰</span>
-                  </button>
-                </div>
-
-                <button
-                  onClick={() => setActiveMockup(null)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Modal Body: Interactive Device Simulator */}
-            <div className="p-6 bg-slate-100 flex-1 overflow-y-auto flex justify-center">
-              <div className={`transition-all duration-300 bg-white rounded-xl shadow-md border border-slate-300 overflow-hidden ${
-                deviceMode === 'mobile' ? 'w-[360px] min-h-[600px]' : 'w-full max-w-3xl min-h-[500px]'
-              }`}>
-                
-                {/* Browser Address Bar */}
-                <div className="bg-slate-200 px-3 py-2 flex items-center gap-2 border-b border-slate-300 text-xs text-slate-600">
-                  <div className="flex gap-1">
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                  </div>
-                  <div className="bg-white rounded px-2.5 py-0.5 text-[11px] font-mono text-slate-500 flex-1 truncate">
-                    https://mintcle.studio/demo/{activeMockup.id}
-                  </div>
-                </div>
-
-                {/* Simulated Web View Page */}
-                <div className="p-6 space-y-8 text-slate-800">
-                  
-                  {/* Hero Block */}
-                  <div className="p-6 bg-slate-900 text-white rounded-xl space-y-3 text-center">
-                    <span className="text-[10px] font-bold bg-teal-500 text-slate-950 px-2 py-0.5 rounded">
-                      HERO SECTION
-                    </span>
-                    <h4 className="text-lg sm:text-xl font-extrabold text-white">
-                      {activeMockup.mockupDetails.heroHeading}
-                    </h4>
-                    <p className="text-xs text-slate-300 max-w-md mx-auto">
-                      {activeMockup.mockupDetails.heroSub}
-                    </p>
-                    <button className="px-4 py-2 rounded-lg bg-teal-500 text-slate-950 text-xs font-bold shadow-xs">
-                      {activeMockup.mockupDetails.primaryCta}
-                    </button>
-                  </div>
-
-                  {/* Sections Preview Grid */}
-                  <div className="space-y-3">
-                    <span className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
-                      주요 영역 구성 (Sections)
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {activeMockup.mockupDetails.sections.map((sec, i) => (
-                        <div key={i} className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center space-y-1">
-                          <span className="text-xs font-bold text-slate-800 block">{sec.name}</span>
-                          <span className="text-[11px] text-slate-500 block">{sec.desc}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Mobile Call CTA Bar */}
-                  <div className="p-3 bg-teal-50 rounded-lg border border-teal-200 flex items-center justify-between text-xs text-teal-900">
-                    <span className="font-bold">모바일 터치 1초 전화/카톡 연결</span>
-                    <span className="bg-teal-600 text-white px-2 py-1 rounded text-[10px]">기본 연동</span>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="text-xs text-slate-500">
-                타깃 고객: <strong className="text-slate-800">{activeMockup.targetAudience}</strong>
-              </div>
-              <div className="flex gap-2 w-full sm:w-auto">
-                <button
-                  onClick={() => setActiveMockup(null)}
-                  className="flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200"
-                >
-                  닫기
-                </button>
-                <button
-                  onClick={() => handleInquiryForSample(activeMockup.type)}
-                  className="flex-1 sm:flex-none px-5 py-2 rounded-lg text-xs font-bold text-white bg-teal-600 hover:bg-teal-700 flex items-center justify-center gap-1.5 shadow-xs"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>이 구조로 상담 신청하기</span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )}
-
     </section>
   );
 };
+

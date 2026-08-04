@@ -19,12 +19,16 @@ export interface PortfolioSample {
   id: string;
   title: string;
   type: string;
-  category: 'corporate' | 'smallbiz' | 'portfolio' | 'landing' | 'renewal';
+  category: 'cafe' | 'company' | 'interior' | 'beauty' | 'app';
   tagline: string;
   description: string;
   colorTheme: string;
   layoutFeatures: string[];
   targetAudience: string;
+  coverImage: string;
+  samplePath: string;
+  isConceptWork: boolean;
+  tags: string[];
   mockupDetails: {
     heroHeading: string;
     heroSub: string;

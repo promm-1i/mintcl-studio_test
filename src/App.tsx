@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionId } from './types';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -12,12 +12,28 @@ import { AdminModal } from './components/AdminModal';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 
+// Sample Pages
+import { CafeSamplePage } from './pages/samples/CafeSamplePage';
+import { CompanySamplePage } from './pages/samples/CompanySamplePage';
+import { InteriorSamplePage } from './pages/samples/InteriorSamplePage';
+import { BeautySamplePage } from './pages/samples/BeautySamplePage';
+import { AppSamplePage } from './pages/samples/AppSamplePage';
+
 export default function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [isPlanningModalOpen, setIsPlanningModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [preSelectedServiceTitle, setPreSelectedServiceTitle] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -27,6 +43,10 @@ export default function App() {
   };
 
   const handleNavigate = (sectionId: SectionId) => {
+    if (currentPath !== '/') {
+      window.location.href = `/#${sectionId}-section`;
+      return;
+    }
     setActiveSection(sectionId);
     const element = document.getElementById(`${sectionId}-section`);
     if (element) {
@@ -39,6 +59,25 @@ export default function App() {
   const handleSelectServiceForInquiry = (serviceTitle: string) => {
     setPreSelectedServiceTitle(serviceTitle);
   };
+
+  // Route Dispatcher
+  const normalizePath = currentPath.replace(/\/$/, '');
+
+  if (normalizePath === '/samples/cafe') {
+    return <CafeSamplePage />;
+  }
+  if (normalizePath === '/samples/company') {
+    return <CompanySamplePage />;
+  }
+  if (normalizePath === '/samples/interior') {
+    return <InteriorSamplePage />;
+  }
+  if (normalizePath === '/samples/beauty') {
+    return <BeautySamplePage />;
+  }
+  if (normalizePath === '/samples/app') {
+    return <AppSamplePage />;
+  }
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-teal-100 selection:text-teal-900">

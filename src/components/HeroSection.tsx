@@ -32,37 +32,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-7 space-y-6 text-left">
             
             {/* Trust Tag */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200/80 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-50 text-amber-900 border border-amber-200/90 shadow-2xs">
+              <Sparkles className="w-4 h-4 text-amber-600" />
               <span>기업 & 소상공인 맞춤 웹스튜디오</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight font-sans">
               과장 없이 명확한 기획,<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600">
-                투명한 공정의 홈페이지 제작
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-700 via-teal-600 to-indigo-700">
+                투명한 공정의 한국형 웹사이트 제작
               </span>
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-2xl">
-              민트클 웹스튜디오는 불필요한 거품을 뺀 명확한 화면 설계와 100% 반응형 웹표준 기술로 기업과 소상공인의 가치를 온전히 전달합니다.
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal max-w-2xl">
+              민트클 웹스튜디오는 불필요한 거품을 뺀 명확한 화면 설계와 100% 모바일 반응형 웹표준 기술로 기업과 소상공인의 브랜드 가치를 완성합니다.
             </p>
 
             {/* Key Value Checklist */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 pb-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 pb-2">
               {[
-                { title: '100% 반응형 웹표준 개발', desc: 'PC, 태블릿, 모바일 완벽 대응' },
-                { title: '투명한 5단계 공정', desc: '단계별 검수 및 명확한 일정 공유' },
-                { title: '네이버/구글 SEO 기본 설정', desc: '검색엔진 수집 최적화 태그' },
-                { title: '오픈 후 1개월 무상 보증', desc: '오탈자 및 텍스트 무료 수정' },
+                { title: '100% 모바일 반응형 웹표준 개발', desc: '스마트폰, 태블릿, PC 완벽 자동 대응' },
+                { title: '투명한 5단계 체계적 공정', desc: '단계별 검수 및 명확한 일정 준수' },
+                { title: '네이버 & 구글 SEO 기본 최적화', desc: '검색엔진 사이트 수집 연동' },
+                { title: '오픈 후 1개월 무상 A/S 보증', desc: '텍스트 수정 및 오류 빠른 대응' },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-sm font-bold text-slate-800 block">{item.title}</span>
-                    <span className="text-xs text-slate-500">{item.desc}</span>
+                    <span className="text-sm font-bold text-slate-900 block">{item.title}</span>
+                    <span className="text-xs text-slate-600 font-medium">{item.desc}</span>
                   </div>
                 </div>
               ))}
@@ -73,20 +73,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 id="hero-estimate-cta"
                 onClick={() => onNavigate('inquiry')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-teal-600 hover:bg-teal-700 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-extrabold text-sm sm:text-base text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
-                <Calculator className="w-4 h-4" />
-                <span>실시간 예상 견적 계산하기</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
+                <Calculator className="w-5 h-5 text-slate-950" />
+                <span>실시간 예상 견적 산출하기</span>
+                <ArrowRight className="w-4 h-4 ml-1 text-slate-950" />
               </button>
 
               <button
-                id="hero-services-cta"
-                onClick={() => onNavigate('services')}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold text-sm text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all cursor-pointer shadow-2xs"
+                id="hero-portfolio-cta"
+                onClick={() => onNavigate('portfolio')}
+                className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-bold text-sm sm:text-base text-slate-800 bg-white border border-slate-300 hover:bg-slate-100 transition-all cursor-pointer shadow-2xs"
               >
-                <Layout className="w-4 h-4 text-teal-600" />
-                <span>제작 가능 서비스 보기</span>
+                <Layout className="w-5 h-5 text-teal-600" />
+                <span>독립 샘플 홈페이지 5종 구경</span>
               </button>
             </div>
 
