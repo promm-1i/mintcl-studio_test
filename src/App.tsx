@@ -18,6 +18,8 @@ import { CompanySamplePage } from './pages/samples/CompanySamplePage';
 import { InteriorSamplePage } from './pages/samples/InteriorSamplePage';
 import { BeautySamplePage } from './pages/samples/BeautySamplePage';
 import { AppSamplePage } from './pages/samples/AppSamplePage';
+import { HospitalSamplePage } from './pages/samples/HospitalSamplePage';
+import { RestaurantSamplePage } from './pages/samples/RestaurantSamplePage';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -66,6 +68,9 @@ export default function App() {
   if (normalizePath === '/samples/cafe') {
     return <CafeSamplePage />;
   }
+  if (normalizePath === '/samples/hospital') {
+    return <HospitalSamplePage />;
+  }
   if (normalizePath === '/samples/company') {
     return <CompanySamplePage />;
   }
@@ -74,6 +79,9 @@ export default function App() {
   }
   if (normalizePath === '/samples/beauty') {
     return <BeautySamplePage />;
+  }
+  if (normalizePath === '/samples/restaurant') {
+    return <RestaurantSamplePage />;
   }
   if (normalizePath === '/samples/app') {
     return <AppSamplePage />;

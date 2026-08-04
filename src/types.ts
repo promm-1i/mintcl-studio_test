@@ -19,9 +19,12 @@ export interface PortfolioSample {
   id: string;
   title: string;
   type: string;
-  category: 'cafe' | 'company' | 'interior' | 'beauty' | 'app';
+  category: 'cafe' | 'hospital' | 'interior' | 'security' | 'beauty' | 'restaurant';
   tagline: string;
   description: string;
+  scopeOfWork: string;
+  productionPeriod: string;
+  responsiveSupport: string;
   colorTheme: string;
   layoutFeatures: string[];
   targetAudience: string;

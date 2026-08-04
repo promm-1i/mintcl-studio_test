@@ -28,12 +28,13 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
   const [previewModalSample, setPreviewModalSample] = useState<PortfolioSample | null>(null);
 
   const categories = [
-    { id: 'all', label: '전체 샘플 보기 (5종)' },
-    { id: 'cafe', label: '카페·베이커리' },
-    { id: 'company', label: '기업·B2B' },
-    { id: 'interior', label: '인테리어·건축' },
-    { id: 'beauty', label: '뷰티·헤어' },
-    { id: 'app', label: '앱 랜딩' },
+    { id: 'all', label: '전체 샘플 보기 (6종)' },
+    { id: 'cafe', label: '카페·디저트' },
+    { id: 'hospital', label: '병원·클리닉' },
+    { id: 'interior', label: '건설·인테리어' },
+    { id: 'security', label: '보안·출입통제' },
+    { id: 'beauty', label: '뷰티·패션' },
+    { id: 'restaurant', label: '소상공인·식당' },
   ];
 
   const filteredSamples = selectedCategory === 'all'
@@ -58,15 +59,21 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           accentBtn: 'bg-amber-600 hover:bg-amber-700 text-white',
           tagBg: 'bg-amber-50 text-amber-800 border-amber-200/80',
         };
-      case 'company':
+      case 'hospital':
         return {
-          badgeBg: 'bg-indigo-100 text-indigo-900 border-indigo-300',
-          accentBtn: 'bg-indigo-600 hover:bg-indigo-700 text-white',
-          tagBg: 'bg-indigo-50 text-indigo-800 border-indigo-200/80',
+          badgeBg: 'bg-sky-100 text-sky-900 border-sky-300',
+          accentBtn: 'bg-sky-600 hover:bg-sky-700 text-white',
+          tagBg: 'bg-sky-50 text-sky-800 border-sky-200/80',
         };
       case 'interior':
         return {
           badgeBg: 'bg-slate-800 text-slate-100 border-slate-700',
+          accentBtn: 'bg-slate-900 hover:bg-slate-800 text-white',
+          tagBg: 'bg-slate-100 text-slate-800 border-slate-300',
+        };
+      case 'security':
+        return {
+          badgeBg: 'bg-slate-900 text-cyan-300 border-cyan-500/40',
           accentBtn: 'bg-slate-900 hover:bg-slate-800 text-white',
           tagBg: 'bg-slate-100 text-slate-800 border-slate-300',
         };
@@ -76,11 +83,11 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           accentBtn: 'bg-rose-600 hover:bg-rose-700 text-white',
           tagBg: 'bg-rose-50 text-rose-800 border-rose-200/80',
         };
-      case 'app':
+      case 'restaurant':
         return {
-          badgeBg: 'bg-purple-100 text-purple-900 border-purple-300',
-          accentBtn: 'bg-purple-600 hover:bg-purple-700 text-white',
-          tagBg: 'bg-purple-50 text-purple-800 border-purple-200/80',
+          badgeBg: 'bg-red-100 text-red-900 border-red-300',
+          accentBtn: 'bg-red-700 hover:bg-red-800 text-white',
+          tagBg: 'bg-red-50 text-red-800 border-red-200/80',
         };
       default:
         return {
@@ -217,14 +224,38 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                       </p>
                     </div>
 
-                    <p className="text-sm text-slate-700 leading-relaxed font-normal">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                       {sample.description}
                     </p>
 
+                    {/* Explicit Metadata Specs Grid */}
+                    <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/90 text-xs text-slate-700 space-y-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                          <span className="font-extrabold text-slate-900">ㆍ업종: </span>
+                          <span className="font-semibold text-teal-800">{sample.type}</span>
+                        </div>
+                        <div>
+                          <span className="font-extrabold text-slate-900">ㆍ제작 기간: </span>
+                          <span className="font-semibold text-slate-800">{sample.productionPeriod}</span>
+                        </div>
+                      </div>
+
+                      <div>
+                        <span className="font-extrabold text-slate-900">ㆍ제작 범위: </span>
+                        <span className="text-slate-800">{sample.scopeOfWork}</span>
+                      </div>
+
+                      <div>
+                        <span className="font-extrabold text-slate-900">ㆍ반응형 지원: </span>
+                        <span className="font-semibold text-slate-800">{sample.responsiveSupport}</span>
+                      </div>
+                    </div>
+
                     {/* Feature Tags List */}
-                    <div className="space-y-2.5 pt-3 border-t border-slate-100">
+                    <div className="space-y-2.5 pt-1">
                       <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block">
-                        주요 핵심 탑재 기능:
+                        주요 핵심 기능:
                       </span>
                       <div className="flex flex-wrap gap-2">
                         {sample.tags.map((tag, idx) => (
