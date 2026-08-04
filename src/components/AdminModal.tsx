@@ -120,7 +120,7 @@ export const AdminModal: React.FC<AdminModalProps> = ({
       setPasswordInput('');
       onShowToast('관리자로 인증되었습니다.');
     } else {
-      setAuthError('비밀번호가 일치하지 않습니다. (초기 비밀번호: admin1234)');
+      setAuthError('비밀번호가 올바르지 않습니다.');
     }
   };
 
@@ -246,24 +246,24 @@ export const AdminModal: React.FC<AdminModalProps> = ({
           </div>
         </div>
 
-        {/* NOT AUTHENTICATED - LOGIN FORM */}
+        {/* NOT AUTHENTICATED - CLEAN PASSWORD POPUP DIALOG */}
         {!isAuthenticated ? (
-          <div className="p-8 sm:p-12 max-w-md mx-auto w-full my-auto text-center space-y-6">
-            <div className="w-16 h-16 bg-teal-50 rounded-2xl border border-teal-200 flex items-center justify-center mx-auto text-teal-600">
-              <Lock className="w-8 h-8" />
+          <div className="p-8 sm:p-10 max-w-sm mx-auto w-full my-auto text-center space-y-5">
+            <div className="w-14 h-14 bg-teal-50 rounded-2xl border border-teal-200 flex items-center justify-center mx-auto text-teal-600 shadow-2xs">
+              <Lock className="w-7 h-7" />
             </div>
             
             <div>
-              <h3 className="text-xl font-bold text-slate-900">관리자 보안 로그인</h3>
+              <h3 className="text-lg font-bold text-slate-900">관리자 인증</h3>
               <p className="text-xs text-slate-500 mt-1">
-                상세 기획서 확인/수정 및 수집된 고객 문의 내역 조회를 위해 비밀번호를 입력해주세요.
+                관리자 전용 기능에 접근하려면 비밀번호를 입력해주세요.
               </p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-4 text-left">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  관리자 비밀번호
+                  비밀번호
                 </label>
                 <input
                   type="password"
@@ -276,7 +276,7 @@ export const AdminModal: React.FC<AdminModalProps> = ({
               </div>
 
               {authError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium">
+                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center">
                   {authError}
                 </div>
               )}
@@ -285,15 +285,9 @@ export const AdminModal: React.FC<AdminModalProps> = ({
                 type="submit"
                 className="w-full py-3 rounded-xl font-bold text-sm text-white bg-teal-600 hover:bg-teal-700 shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                <span>관리자 로그인</span>
+                <span>확인 및 로그인</span>
               </button>
             </form>
-
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-left text-xs text-slate-500 space-y-1">
-              <span className="font-bold text-slate-700">💡 로그인 안내:</span>
-              <p>• 초기 기본 비밀번호는 <code className="bg-slate-200 px-1 py-0.5 rounded text-teal-800 font-bold">admin1234</code> 입니다.</p>
-              <p>• 로그인 후 비밀번호 설정 탭에서 언제든지 변경할 수 있습니다.</p>
-            </div>
           </div>
         ) : (
           /* AUTHENTICATED ADMIN DASHBOARD */
@@ -706,11 +700,11 @@ export const AdminModal: React.FC<AdminModalProps> = ({
 
                   <form onSubmit={handleChangePassword} className="space-y-4 text-xs">
                     <div>
-                      <label className="block font-bold text-slate-700 mb-1">현재 설정된 비밀번호</label>
+                      <label className="block font-bold text-slate-700 mb-1">현재 상태</label>
                       <input
-                        type="text"
+                        type="password"
                         disabled
-                        value={currentPwSetting}
+                        value="••••••••••••"
                         className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-500 font-mono"
                       />
                     </div>
