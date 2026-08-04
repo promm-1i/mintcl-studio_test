@@ -1,0 +1,6 @@
+{
+  "name": "민트클 웹스튜디오",
+  "description": "기업 및 소상공인을 위한 맞춤형 웹사이트 제작 안내 및 실시간 견적·상담 웹사이트",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
