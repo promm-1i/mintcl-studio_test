@@ -34,8 +34,8 @@ export const PROCESS_STEPS: ProcessStep[] = [
     subtitle: '웹 표준 개발, SEO, 문의폼 연동',
     duration: '3일 ~ 5일',
     clientActions: ['실시간 테스트 링크 접속 후 기능 동작 확인', '모바일/PC 기기별 화면 확인'],
-    studioActions: ['크로스 브라우징 및 반응형 프론트엔드 개발', '검색엔진 최적화(SEO) 태그 작성', '실시간 상담/문의폼 연동 및 이메일 알림 설정'],
-    deliverables: ['완성된 웹사이트 테스트 URL', '검색엔진 설정 내역'],
+    studioActions: ['크로스 브라우징 및 반응형 프론트엔드 개발', '네이버·카카오 지도 연동 및 위치 세팅', '실시간 상담/문의폼 연동 및 이메일 알림 설정'],
+    deliverables: ['완성된 웹사이트 테스트 URL', '사이트 기본 설정 내역'],
   },
   {
     step: 5,
@@ -51,10 +51,10 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export const WORK_SCOPE_SUMMARY = {
   included: [
     'PC & 모바일 반응형 웹사이트 제작',
-    '네이버 / 구글 검색엔진 최적화(SEO) 메타태그 설정',
+    '네이버 / 카카오 지도 연동 및 오시는 길 구현',
     '카카오톡 연동 빠른 상담 & 직관적 문의폼 제작',
-    '네이버 지도 / 카카오맵 연동 및 오시는 길 위치 구현',
-    '대표 로고 깔끔 배치 및 파비콘(Favicon) 생성 지원',
+    '대표 로고 깔끔 배치 및 대표 아이콘(파비콘) 지원',
+    '스마트폰 원터치 전화 연결 버튼 제공',
     '오픈 후 1개월 이내 텍스트/이미지 단순 오타 무상 수정',
   ],
   excluded: [

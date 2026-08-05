@@ -38,12 +38,12 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div className="pt-2 space-y-2 text-sm text-slate-300">
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-teal-400 shrink-0" />
-                <span>상담 문의 이메일: <strong className="text-amber-300 font-mono">6gsmake@gmail.com</strong></span>
+                <Mail className="w-4 h-4 text-amber-300 shrink-0" />
+                <span>이메일 문의: <strong className="text-amber-300 font-mono">6gsmake@gmail.com</strong> <span className="text-xs text-slate-400 font-normal">(24시간 상시 접수)</span></span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Clock className="w-4 h-4 text-teal-400 shrink-0" />
-                <span>운영시간: <strong className="text-white">평일 09:00 ~ 18:00 (토/일/공휴일 휴무)</strong></span>
+                <span>카톡 실시간 상담: <strong className="text-white">평일 09:00 ~ 18:00</strong></span>
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button onClick={() => onNavigate('portfolio')} className="hover:text-amber-300 transition-colors font-medium cursor-pointer">
-                  포트폴리오 (독립 샘플 5종)
+                  포트폴리오 (독립 샘플 6종)
                 </button>
               </li>
               <li>

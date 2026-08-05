@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, MessageCircle, ExternalLink, Copy, Check, Phone, Mail, Clock, Send } from 'lucide-react';
+import { X, MessageCircle, ExternalLink, Mail, Clock, Send } from 'lucide-react';
 
 interface KakaoModalProps {
   isOpen: boolean;
@@ -14,23 +14,11 @@ export const KakaoModal: React.FC<KakaoModalProps> = ({
   onNavigateToInquiry,
   onShowToast,
 }) => {
-  const [copied, setCopied] = React.useState(false);
-
   if (!isOpen) return null;
-
-  const kakaoId = 'mintcle_web';
-
-  const handleCopyKakaoId = () => {
-    navigator.clipboard.writeText(kakaoId);
-    setCopied(true);
-    onShowToast('카카오톡 아이디(mintcle_web)가 복사되었습니다!');
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const handleOpenKakaoTalk = () => {
     onShowToast('카카오톡 1:1 오픈채팅 상담으로 연결합니다.');
-    // Simulated Open Kakao Link
-    window.open('https://open.kakao.com', '_blank');
+    window.open('https://open.kakao.com/o/sLifOmHi', '_blank');
   };
 
   return (
@@ -70,7 +58,7 @@ export const KakaoModal: React.FC<KakaoModalProps> = ({
         {/* Content Body */}
         <div className="p-6 space-y-5 text-left">
           
-          {/* Main Action - Open Kakao */}
+          {/* Main Action - Open Kakao 1:1 Chat */}
           <button
             onClick={handleOpenKakaoTalk}
             className="w-full py-3.5 px-4 rounded-2xl bg-[#FEE500] hover:bg-[#fada0a] text-[#3C1E1E] font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer border border-amber-300"
@@ -80,35 +68,20 @@ export const KakaoModal: React.FC<KakaoModalProps> = ({
             <ExternalLink className="w-4 h-4" />
           </button>
 
-          {/* Copy ID Card */}
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
-            <div>
-              <div className="text-slate-500 font-medium">카카오톡 ID 검색 상담</div>
-              <div className="text-sm font-extrabold text-slate-900 font-mono mt-0.5">@{kakaoId}</div>
-            </div>
-            <button
-              onClick={handleCopyKakaoId}
-              className="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-bold border border-slate-200 transition-colors cursor-pointer flex items-center gap-1.5 shadow-2xs"
-            >
-              {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-600" />}
-              <span>{copied ? '복사됨' : 'ID 복사'}</span>
-            </button>
-          </div>
-
           {/* Operating Info */}
-          <div className="space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-4">
+          <div className="space-y-2.5 text-xs text-slate-600 border-t border-b border-slate-100 py-4">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-teal-600 shrink-0" />
-              <span>상담 가능 시간: <strong className="text-slate-900">평일 09:00 ~ 18:00 (주말/공휴일 순차 답변)</strong></span>
+              <span>카카오톡 실시간 상담: <strong className="text-slate-900">평일 09:00 ~ 18:00</strong></span>
             </div>
             <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-teal-600 shrink-0" />
-              <span>직접 이메일 문의: <strong className="text-slate-900 font-mono">6gsmake@gmail.com</strong></span>
+              <Mail className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>이메일 문의 (<strong className="text-slate-900 font-mono">6gsmake@gmail.com</strong>): <strong className="text-teal-700">24시간 상시 접수</strong></span>
             </div>
           </div>
 
           {/* Alternative Form Action */}
-          <div className="pt-2">
+          <div>
             <button
               onClick={() => {
                 onClose();

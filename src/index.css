@@ -3,28 +3,73 @@
 @layer utilities {
   @keyframes floatSlow {
     0%, 100% {
-      transform: translateY(0px) scale(1);
+      transform: translateY(0px) rotate(0deg) scale(1);
     }
     50% {
-      transform: translateY(-18px) scale(1.05);
+      transform: translateY(-25px) rotate(3deg) scale(1.08);
+    }
+  }
+
+  @keyframes floatReverse {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translateY(22px) rotate(-4deg) scale(1.06);
     }
   }
 
   @keyframes pulseGlow {
     0%, 100% {
-      opacity: 0.35;
+      opacity: 0.3;
+      transform: scale(1);
     }
     50% {
-      opacity: 0.65;
+      opacity: 0.75;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes gridMove {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 64px 64px;
     }
   }
 
   .animate-float-slow {
-    animation: floatSlow 8s ease-in-out infinite;
+    animation: floatSlow 10s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: floatReverse 12s ease-in-out infinite;
   }
 
   .animate-pulse-glow {
-    animation: pulseGlow 6s ease-in-out infinite;
+    animation: pulseGlow 7s ease-in-out infinite;
+  }
+
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  .animate-grid-move {
+    animation: gridMove 20s linear infinite;
   }
 
   .bg-grid-slate {

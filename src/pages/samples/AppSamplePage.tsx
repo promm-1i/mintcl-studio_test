@@ -266,6 +266,55 @@ export const AppSamplePage: React.FC = () => {
         </div>
       </section>
 
+      {/* 3-Step Usage Flow Section */}
+      <section className="py-16 px-6 bg-[#131B2E] border-t border-slate-800 text-left">
+        <div className="max-w-6xl mx-auto space-y-10">
+          <div className="text-center space-y-2">
+            <span className="text-xs font-bold text-[#818CF8] tracking-widest uppercase block">
+              3-Step Workflow
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+              단 3초 만에 완료되는 지혜로운 일정 관리
+            </h3>
+            <p className="text-xs text-slate-400">
+              복잡한 수동 입력 없이 말 한마디, 메세지 한 줄로 하루가 정리됩니다.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+            <div className="p-6 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-3 relative">
+              <div className="w-8 h-8 rounded-xl bg-[#6366F1]/20 text-[#818CF8] flex items-center justify-center font-black text-sm">
+                01
+              </div>
+              <h4 className="text-base font-bold text-white">카톡/음성으로 일정 전달</h4>
+              <p className="text-slate-400 leading-relaxed">
+                "내일 3시 팀 미팅"이라고 카카오톡 챗봇이나 음성으로 편하게 남기세요.
+              </p>
+            </div>
+
+            <div className="p-6 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-3 relative">
+              <div className="w-8 h-8 rounded-xl bg-[#6366F1]/20 text-[#818CF8] flex items-center justify-center font-black text-sm">
+                02
+              </div>
+              <h4 className="text-base font-bold text-white">AI 자동 타임블록 배치</h4>
+              <p className="text-slate-400 leading-relaxed">
+                AI 알고리즘이 사용자의 집중 골든타임을 계산해 일정을 자동 배치해 줍니다.
+              </p>
+            </div>
+
+            <div className="p-6 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-3 relative">
+              <div className="w-8 h-8 rounded-xl bg-[#6366F1]/20 text-[#818CF8] flex items-center justify-center font-black text-sm">
+                03
+              </div>
+              <h4 className="text-base font-bold text-white">달력 동기화 & 리워드</h4>
+              <p className="text-slate-400 leading-relaxed">
+                네이버/구글 캘린더에 즉시 연동되며 완료 시 습관 스티커를 지급받습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* User Reviews */}
       <section id="reviews" className="py-20 px-6 bg-[#181825] border-y border-slate-800 text-left">
         <div className="max-w-6xl mx-auto space-y-10">

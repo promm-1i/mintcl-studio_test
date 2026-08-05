@@ -19,7 +19,7 @@ export interface PortfolioSample {
   id: string;
   title: string;
   type: string;
-  category: 'cafe' | 'hospital' | 'interior' | 'security' | 'beauty' | 'restaurant';
+  category: 'cafe' | 'hospital' | 'interior' | 'security' | 'beauty' | 'restaurant' | 'app';
   tagline: string;
   description: string;
   scopeOfWork: string;

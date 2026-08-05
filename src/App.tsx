@@ -39,6 +39,60 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Automatic ScrollSpy to sync activeSection with current visible section as user scrolls
+  useEffect(() => {
+    const normalizePath = currentPath.replace(/\/$/, '');
+    if (normalizePath !== '') return;
+
+    const sections: { id: SectionId; elementId: string }[] = [
+      { id: 'home', elementId: 'home-section' },
+      { id: 'services', elementId: 'services-section' },
+      { id: 'portfolio', elementId: 'portfolio-section' },
+      { id: 'process', elementId: 'process-section' },
+      { id: 'faq', elementId: 'faq-section' },
+      { id: 'inquiry', elementId: 'inquiry-section' },
+    ];
+
+    const handleScroll = () => {
+      // Top of page
+      if (window.scrollY < 80) {
+        setActiveSection('home');
+        return;
+      }
+
+      // Check if user reached near bottom of document
+      const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      const totalHeight = document.documentElement.scrollHeight;
+
+      if (windowHeight + scrollY >= totalHeight - 120) {
+        setActiveSection('inquiry');
+        return;
+      }
+
+      // Find section closest to top offset
+      const scrollPosition = scrollY + 220;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const elem = document.getElementById(sections[i].elementId);
+        if (elem) {
+          const top = elem.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveSection(sections[i].id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [currentPath]);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {

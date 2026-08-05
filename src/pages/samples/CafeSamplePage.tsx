@@ -220,6 +220,74 @@ export const CafeSamplePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Fresh Baking Time Schedule Section (Design Enhancement) */}
+      <section className="py-14 px-6 bg-[#F8F4EE] border-b border-[#EADFCF] text-left">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold text-[#8B5E3C] uppercase tracking-wider block mb-1">
+                Fresh Baking Time
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#2C2623]">
+                당일 갓 구운 빵 출하 시간표
+              </h3>
+            </div>
+            <div className="text-xs text-[#7A6B63] bg-white px-3.5 py-2 rounded-xl border border-[#EADFCF] shadow-2xs flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#8B5E3C]" />
+              <span>실시간 오븐 출하 상태 연동</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
+                  1차 출하 08:30
+                </span>
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  갓 구워짐
+                </span>
+              </div>
+              <h4 className="font-extrabold text-base text-[#2C2623]">시그니처 고메 소금빵 & 우유 식빵</h4>
+              <p className="text-xs text-[#6C5E57] leading-relaxed">
+                출근길을 채우는 따뜻한 고소함. 천일염 버터 풍미가 가장 깊은 시간대입니다.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
+                  2차 출하 11:30
+                </span>
+                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                  판매 진행 중
+                </span>
+              </div>
+              <h4 className="font-extrabold text-base text-[#2C2623]">앙버터 스콘 & 크루아상 라인</h4>
+              <p className="text-xs text-[#6C5E57] leading-relaxed">
+                점심시간 디저트로 인기 높은 바삭한 결의 페이스트리와 프리미엄 스콘입니다.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
+                  3차 출하 14:30
+                </span>
+                <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                  오픈 대기중
+                </span>
+              </div>
+              <h4 className="font-extrabold text-base text-[#2C2623]">제주 말차 타르트 & 딸기 케이크</h4>
+              <p className="text-xs text-[#6C5E57] leading-relaxed">
+                오후 티타임을 완성하는 수제 케이크 및 선물용 디저트 라인업입니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Menu Section */}
       <section id="menu" className="py-20 px-6 max-w-6xl mx-auto text-left">
         <div className="text-center space-y-3 mb-10">

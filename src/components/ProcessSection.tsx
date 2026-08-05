@@ -1,172 +1,206 @@
 import React from 'react';
-import { PROCESS_STEPS, WORK_SCOPE_SUMMARY } from '../data/processData';
+import { motion } from 'motion/react';
+import { WORK_SCOPE_SUMMARY } from '../data/processData';
 import { SectionId } from '../types';
 import { 
   CheckCircle2, 
   XCircle, 
-  Clock, 
   ArrowRight, 
-  UserCheck, 
-  Code2, 
-  FileCheck,
-  Send
+  Send,
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 
 interface ProcessSectionProps {
   onNavigate: (sectionId: SectionId) => void;
 }
 
+const PROCESS_SUMMARY_STEPS = [
+  {
+    step: '01',
+    title: '상담 & 견적',
+    duration: '1~2일',
+    desc: '제작 목적과 필요한 페이지를 파악하고, 명확한 예상 견적과 일정을 안내해 드립니다.',
+    result: '견적서 및 일정 안내',
+  },
+  {
+    step: '02',
+    title: '기획 & 원고',
+    duration: '2~3일',
+    desc: '사이트 구조(IA)를 설계하고, 필요한 로고·텍스트·이미지 등 자료를 정리합니다.',
+    result: '화면 구조도(와이어프레임)',
+  },
+  {
+    step: '03',
+    title: '디자인 확정',
+    duration: '3~5일',
+    desc: '브랜드 컬러에 맞춘 PC 및 모바일 화면 시안을 제작하여 고객님과 검토합니다.',
+    result: '디자인 시안',
+  },
+  {
+    step: '04',
+    title: '반응형 개발',
+    duration: '3~5일',
+    desc: '모바일 반응형 웹 개발, 검색엔진(SEO) 수집 설정 및 문의폼을 연동합니다.',
+    result: '테스트 연결 링크',
+  },
+  {
+    step: '05',
+    title: '오픈 & A/S',
+    duration: '1~2일',
+    desc: '고객 도메인 연결 및 최종 검수를 진행하며, 오픈 후 1개월간 무상 A/S를 지원합니다.',
+    result: '정식 오픈 & 보증 시작',
+  },
+];
+
 export const ProcessSection: React.FC<ProcessSectionProps> = ({ onNavigate }) => {
   return (
-    <section id="process-section" className="py-20 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="process-section" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200">
-            <span>투명한 공정 체계</span>
+        {/* Section Header with Motion */}
+        <motion.div 
+          className="text-center max-w-3xl mx-auto space-y-3 mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-teal-100/80 text-teal-900 border border-teal-200">
+            <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+            <span>제작 절차</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-sans">
-            예측 가능한 <span className="text-teal-600">5단계 제작 절차</span>
+            5단계 제작 프로세스
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            민트클 웹스튜디오는 시작부터 오픈까지 매 단계에서 고객과 명확히 소통하며, 검수 승인 후 다음 단계로 진행합니다.
+            상담부터 디자인, 개발, 최종 오픈까지 간결하고 예측 가능한 5단계로 진행됩니다.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 5-Step Process Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 relative mb-16 text-left">
-          {PROCESS_STEPS.map((proc) => (
-            <div
-              key={proc.step}
-              className="bg-slate-50 rounded-2xl p-5 border border-slate-200/90 hover:border-teal-400 hover:shadow-md transition-all flex flex-col justify-between space-y-4 relative group"
+        {/* Streamlined 5-Step Flow Grid with Motion */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-14 text-left">
+          {PROCESS_SUMMARY_STEPS.map((step, idx) => (
+            <motion.div
+              key={step.step}
+              className="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-4 hover:border-teal-500 hover:shadow-md transition-all relative group"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.4, delay: idx * 0.1 }}
             >
-              <div className="space-y-3">
-                {/* Step Number Badge */}
+              <div className="space-y-2">
+                {/* Step Header */}
                 <div className="flex items-center justify-between">
-                  <span className="w-8 h-8 rounded-xl bg-teal-600 text-white font-extrabold text-sm flex items-center justify-center shadow-xs">
-                    0{proc.step}
+                  <span className="text-3xl font-black text-teal-600 tracking-tight">
+                    {step.step}
                   </span>
-                  <span className="text-[10px] font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
-                    <Clock className="w-3 h-3 inline mr-1" />
-                    {proc.duration}
+                  <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200">
+                    {step.duration}
                   </span>
                 </div>
 
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
-                    {proc.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {proc.subtitle}
-                  </p>
-                </div>
+                {/* Step Title */}
+                <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-teal-700 transition-colors">
+                  {step.title}
+                </h3>
 
-                {/* Studio Actions */}
-                <div className="space-y-1 pt-2 border-t border-slate-200/60">
-                  <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1">
-                    <Code2 className="w-3.5 h-3.5 text-teal-600" />
-                    스튜디오 진행:
-                  </span>
-                  <ul className="space-y-1">
-                    {proc.studioActions.map((act, idx) => (
-                      <li key={idx} className="text-[11px] text-slate-600 leading-snug flex items-start gap-1">
-                        <span className="text-teal-600 shrink-0">•</span>
-                        <span>{act}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Client Actions */}
-                <div className="space-y-1 pt-2 border-t border-slate-200/60">
-                  <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1">
-                    <UserCheck className="w-3.5 h-3.5 text-slate-500" />
-                    고객 준비 사항:
-                  </span>
-                  <ul className="space-y-1">
-                    {proc.clientActions.map((act, idx) => (
-                      <li key={idx} className="text-[11px] text-slate-500 leading-snug flex items-start gap-1">
-                        <span className="text-slate-400 shrink-0">•</span>
-                        <span>{act}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Step Description */}
+                <p className="text-sm text-slate-700 leading-relaxed font-normal">
+                  {step.desc}
+                </p>
               </div>
 
-              {/* Step Output Deliverable */}
-              <div className="p-2.5 bg-white rounded-xl border border-slate-200/80 text-[11px] text-slate-700 font-medium flex items-center gap-1.5">
-                <FileCheck className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                <span>결과물: <strong>{proc.deliverables[0]}</strong></span>
+              {/* Step Result */}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">산출물</span>
+                <span className="font-bold text-teal-800">{step.result}</span>
               </div>
-            </div>
+
+              {/* Desktop Arrow Indicator for steps 1-4 */}
+              {idx < 4 && (
+                <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 text-slate-300">
+                  <ArrowRight className="w-5 h-5 text-slate-300" />
+                </div>
+              )}
+            </motion.div>
           ))}
         </div>
 
-        {/* Work Scope Breakdown (포함 / 미포함 범위) */}
-        <div className="bg-slate-50 rounded-2xl border border-slate-200/90 p-6 sm:p-8 lg:p-10 space-y-8 text-left">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900">
-                기본 명확 작업 범위 (Work Scope Declaration)
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                계약 후 오해가 없도록 기본 제작 포함 사항과 고객 준비/별도 항목을 명확히 안내해 드립니다.
-              </p>
+        {/* Work Scope Breakdown with Motion */}
+        <motion.div 
+          className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 text-left shadow-2xs"
+          initial={{ opacity: 0, y: 35, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-teal-600 shrink-0" />
+              <div>
+                <h3 className="text-xl font-bold text-slate-900">
+                  기본 제작 범위 안내
+                </h3>
+                <p className="text-sm text-slate-600 font-medium">
+                  기본 포함 사항과 실비 항목을 정직하게 안내합니다.
+                </p>
+              </div>
             </div>
 
             <button
               id="process-inquire-cta"
               onClick={() => onNavigate('inquiry')}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-xs text-white bg-teal-600 hover:bg-teal-700 shadow-xs cursor-pointer shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm text-white bg-teal-600 hover:bg-teal-700 shadow-2xs cursor-pointer shrink-0 transition-all"
             >
-              <Send className="w-3.5 h-3.5" />
-              <span>상담 신청하기</span>
+              <Send className="w-4 h-4" />
+              <span>견적 및 문의하기</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Included Scope Box */}
-            <div className="bg-white rounded-xl p-6 border border-emerald-200 shadow-2xs space-y-4">
-              <div className="flex items-center gap-2 text-emerald-800 font-extrabold text-sm border-b border-emerald-100 pb-3">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                <span>기본 제작비 포함 사항 (No Hidden Cost)</span>
+            <div className="bg-emerald-50/80 rounded-xl p-5 border border-emerald-200 space-y-3">
+              <div className="flex items-center gap-2 text-emerald-900 font-bold text-sm sm:text-base border-b border-emerald-200 pb-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                <span>제작비 포함 사항 (추가금 없음)</span>
               </div>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2.5 text-sm font-medium text-slate-800">
                 {WORK_SCOPE_SUMMARY.included.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span className="leading-relaxed font-medium">{item}</span>
+                  <li key={idx} className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Excluded Scope Box */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-4">
-              <div className="flex items-center gap-2 text-slate-700 font-extrabold text-sm border-b border-slate-100 pb-3">
-                <XCircle className="w-5 h-5 text-slate-400" />
-                <span>실비 별도 및 고객 직접 준비 항목</span>
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 space-y-3">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm sm:text-base border-b border-slate-200 pb-2">
+                <XCircle className="w-5 h-5 text-slate-400 shrink-0" />
+                <span>실비 별도 및 직접 준비 항목</span>
               </div>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2.5 text-sm font-medium text-slate-700">
                 {WORK_SCOPE_SUMMARY.excluded.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                    <span className="leading-relaxed">{item}</span>
+                  <li key={idx} className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-slate-400 shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <div className="pt-2 text-[11px] text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                💡 도메인 및 호스팅은 가이드에 따라 고객님 계정으로 직접 구매하시도록 도와드려 유일한 소유권을 보장합니다.
+              <div className="pt-2 text-xs sm:text-sm text-slate-600 font-medium">
+                💡 도메인 및 호스팅은 고객님 직접 명의로 개설하여 소유권을 100% 보장합니다.
               </div>
             </div>
 
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
   );
 };
+
+

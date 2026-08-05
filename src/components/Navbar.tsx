@@ -34,7 +34,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         setIsScrolled(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -129,7 +130,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="header-inquiry-cta"
               onClick={() => handleNavClick('inquiry')}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white bg-teal-600 hover:bg-teal-700 shadow-md transition-all cursor-pointer"
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white shadow-md transition-all cursor-pointer ${
+                activeSection === 'inquiry'
+                  ? 'bg-teal-700 ring-2 ring-teal-400 font-black scale-102'
+                  : 'bg-teal-600 hover:bg-teal-700'
+              }`}
             >
               <Send className="w-4 h-4" />
               <span>견적문의</span>
@@ -207,9 +212,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
       </header>
 
-      {/* PERSISTENT FLOATING QUICK NAVIGATION BANNER (Visible on scroll - Sleek Single Column Vertical Bar) */}
+      {/* PERSISTENT FLOATING QUICK NAVIGATION BANNER (Visible on scroll - Hidden on mobile, visible on desktop) */}
       {isScrolled && (
-        <div className="fixed right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center">
+        <div className="fixed right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-center">
           <div className="bg-slate-900/95 text-white backdrop-blur-md p-1.5 sm:p-2 rounded-2xl border border-slate-700/90 shadow-2xl flex flex-col items-center gap-1.5 w-13 sm:w-15 select-none">
             
             {/* Top Brand Indicator */}
@@ -261,7 +266,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="floating-banner-inquiry-btn"
               onClick={() => handleNavClick('inquiry')}
-              className="w-full py-1.5 px-0.5 rounded-xl text-[10px] font-extrabold text-white bg-teal-600 hover:bg-teal-500 transition-all shadow-xs cursor-pointer flex flex-col items-center justify-center leading-tight"
+              className={`w-full py-1.5 px-0.5 rounded-xl text-[10px] font-extrabold transition-all shadow-xs cursor-pointer flex flex-col items-center justify-center leading-tight ${
+                activeSection === 'inquiry'
+                  ? 'text-white bg-teal-500 ring-2 ring-teal-300 font-black shadow-md'
+                  : 'text-white bg-teal-600 hover:bg-teal-500'
+              }`}
               title="견적 문의"
             >
               <Send className="w-3.5 h-3.5 text-white mb-0.5" />

@@ -399,11 +399,29 @@ export const BeautySamplePage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 bg-[#4A2E35] text-[#FFE4E6] text-xs text-center space-y-2">
+      <footer className="py-8 px-6 pb-24 md:pb-8 bg-[#4A2E35] text-[#FFE4E6] text-xs text-center space-y-2">
         <p className="font-bold">라온 헤어 아틀리에 (RAON Hair) 대표 샘플 웹사이트</p>
         <p className="text-[#FECDD3]">본 페이지는 민트클 웹스튜디오에서 커스텀 제작 가능한 국내 뷰티·헤어 분야 웹사이트 시안입니다.</p>
         <p className="text-[11px] text-[#FDA4AF] pt-1">© 2026 Mintcle Web Studio Concept Work. All rights reserved.</p>
       </footer>
+
+      {/* Mobile Fixed CTA Bar */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#FFE4E6] p-3 shadow-2xl flex items-center gap-2">
+        <a
+          href="tel:02-333-7788"
+          className="flex-1 py-3 rounded-xl bg-[#FFFDFB] border border-[#FECDD3] text-[#881337] font-bold text-xs text-center flex items-center justify-center gap-1.5 shadow-2xs"
+        >
+          <Phone className="w-4 h-4 text-[#E11D48]" />
+          <span>전화 예약 문의</span>
+        </a>
+        <a
+          href="#booking"
+          className="flex-1 py-3 rounded-xl bg-[#E11D48] text-white font-bold text-xs text-center flex items-center justify-center gap-1.5 shadow-md"
+        >
+          <Calendar className="w-4 h-4" />
+          <span>1:1 빠른 예약</span>
+        </a>
+      </div>
 
     </div>
   );

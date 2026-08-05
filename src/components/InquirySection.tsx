@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { InquiryFormData, FeatureOption } from '../types';
 import { 
   Calculator, 
@@ -35,7 +36,7 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
   const [calcServiceType, setCalcServiceType] = useState<string>('소상공인 홈페이지');
   const [calcPageCount, setCalcPageCount] = useState<number>(5);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([
-    'feature-map', 'feature-seo', 'feature-mobile-cta'
+    'feature-map', 'feature-mobile-cta'
   ]);
 
   // Form State
@@ -79,10 +80,8 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
   // Extra Optional Features
   const featureOptions: FeatureOption[] = [
     { id: 'feature-mobile-cta', name: '모바일 원터치 전화/카톡 연결', desc: '모바일 상단 플로팅 연결', price: 0 },
-    { id: 'feature-map', name: '네이버/카카오 지도 연동', desc: '오시는 길 & 매장 위치 설정', price: 0 },
-    { id: 'feature-seo', name: '검색엔진 최적화(SEO) 태그', desc: '네이버·구글 웹마스터 등록', price: 0 },
-    { id: 'feature-board', name: '공지사항 / 블로그 게시판', desc: '소식 등록용 관리 게시판', price: 150000 },
-    { id: 'feature-form', name: '맞춤 문의/예약 데이터 폼', desc: '이메일 수신 신청 양식', price: 100000 },
+    { id: 'feature-map', name: '네이버/카카오 지도 연동', desc: '오시는 길 & 매장 위치 지도 연동', price: 0 },
+    { id: 'feature-form', name: '맞춤 문의/예약 신청 폼', desc: '이메일 수신 신청 양식', price: 100000 },
     { id: 'feature-lang', name: '다국어 언어 스위처', desc: '한/영/중 사이트 전환 기능', price: 200000 },
   ];
 
@@ -216,66 +215,87 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
   const calculatedTotal = calculateTotalPrice();
 
   return (
-    <section id="inquiry-section" className="py-20 bg-white border-b border-slate-200">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="inquiry-section" className="py-20 bg-white border-b border-slate-200 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-50 text-amber-900 border border-amber-200 shadow-2xs">
-            <Sparkles className="w-4 h-4 text-amber-600" />
-            <span>실시간 견적 & 제작 상담 문의</span>
+        {/* Section Header with Motion */}
+        <motion.div 
+          className="text-center max-w-3xl mx-auto space-y-3 mb-8"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-teal-50 text-teal-800 border border-teal-200">
+            <Sparkles className="w-4 h-4 text-teal-600" />
+            <span>비용 계산 & 상담 문의</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight font-sans">
-            부담 없는 <span className="text-teal-600">실시간 견적 산출 및 1:1 맞춤 제작 문의</span>
+            예상 가격 계산기 & 1:1 상담 신청
           </h2>
           <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
-            원하시는 제작 유형과 필요 옵션을 선택하여 즉시 투명한 예상 금액을 확인하시거나, 바로 맞춤 상담을 신청해 보세요.
+            필요한 옵션을 직접 클릭하여 예상 금액을 확인해보시거나, 궁금한 내용을 적어 상담을 신청해보세요.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Direct Contact Banner with 6gsmake@gmail.com & Operating Hours */}
-        <div className="p-4 sm:p-5 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md mb-10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shrink-0">
-              <Mail className="w-5 h-5" />
+        {/* Direct Contact Banner with Motion */}
+        <motion.div 
+          className="p-5 sm:p-6 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md mb-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm sm:text-base"
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shrink-0">
+              <Mail className="w-6 h-6" />
             </div>
             <div className="text-left">
-              <div className="font-extrabold text-amber-300 text-sm sm:text-base">직접 상담 문의 이메일</div>
-              <div className="text-slate-300 font-medium">이메일 접수: <strong className="text-white font-mono text-sm sm:text-base">6gsmake@gmail.com</strong></div>
+              <div className="font-extrabold text-amber-300 text-base sm:text-lg flex items-center gap-2">
+                <span>이메일 직접 문의</span>
+                <span className="text-xs bg-amber-400/20 text-amber-300 font-normal px-2 py-0.5 rounded border border-amber-400/40">24시간 언제든 접수</span>
+              </div>
+              <div className="text-slate-200 font-medium">이메일 주소: <strong className="text-white font-mono text-base sm:text-lg">6gsmake@gmail.com</strong></div>
             </div>
           </div>
-          <div className="flex items-center gap-2 bg-slate-800 px-4 py-2.5 rounded-xl text-xs sm:text-sm text-slate-300 shrink-0 border border-slate-700">
-            <Clock className="w-4.5 h-4.5 text-teal-400 shrink-0" />
-            <span>운영시간: <strong className="text-white">평일 09:00 ~ 18:00</strong> (주말/공휴일 휴무)</span>
+          <div className="flex items-center gap-2.5 bg-slate-800 px-5 py-3 rounded-xl text-xs sm:text-sm text-slate-200 shrink-0 border border-slate-700">
+            <Clock className="w-5 h-5 text-teal-400 shrink-0" />
+            <span>카톡 실시간 상담: <strong className="text-white font-bold">평일 09:00 ~ 18:00</strong></span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Tab Selector Buttons */}
-        <div className="flex items-center justify-center gap-2 mb-10">
+        <motion.div 
+          className="flex flex-wrap items-center justify-center gap-3 mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
           <button
             id="tab-calculator"
             onClick={() => setActiveTab('calculator')}
-            className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            className={`inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold transition-all cursor-pointer ${
               activeTab === 'calculator'
-                ? 'bg-teal-600 text-white shadow-xs'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200/80 border border-slate-200'
+                ? 'bg-teal-600 text-white shadow-md'
+                : 'bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-300'
             }`}
           >
-            <Calculator className="w-4 h-4" />
-            <span>1. 실시간 견적 계산기</span>
+            <Calculator className="w-5 h-5" />
+            <span>1. 예상 가격 바로 계산하기</span>
           </button>
 
           <button
             id="tab-form"
             onClick={() => setActiveTab('form')}
-            className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            className={`inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold transition-all cursor-pointer ${
               activeTab === 'form'
-                ? 'bg-teal-600 text-white shadow-xs'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200/80 border border-slate-200'
+                ? 'bg-teal-600 text-white shadow-md'
+                : 'bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-300'
             }`}
           >
-            <Send className="w-4 h-4" />
-            <span>2. 제작 상담 신청하기</span>
+            <Send className="w-5 h-5" />
+            <span>2. 1:1 상담 신청서 작성</span>
           </button>
 
           {savedInquiries.length > 0 && (
@@ -292,7 +312,7 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
               <span>내 신청 이력 ({savedInquiries.length})</span>
             </button>
           )}
-        </div>
+        </motion.div>
 
         {/* TAB 1: REAL-TIME INSTANT ESTIMATE CALCULATOR */}
         {activeTab === 'calculator' && (
@@ -543,8 +563,8 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                      <User className="w-3.5 h-3.5 text-teal-600" />
+                    <label className="text-sm font-extrabold text-slate-900 flex items-center gap-1">
+                      <User className="w-4 h-4 text-teal-600" />
                       성함 / 담당자명 <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -553,14 +573,14 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="홍길동"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
+                      className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
                     />
                   </div>
 
                   {/* Company Name */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                      <Building className="w-3.5 h-3.5 text-slate-500" />
+                    <label className="text-sm font-extrabold text-slate-900 flex items-center gap-1">
+                      <Building className="w-4 h-4 text-slate-500" />
                       업체명 / 상호명 (선택)
                     </label>
                     <input
@@ -568,14 +588,14 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                       value={formData.companyName}
                       onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                       placeholder="민트클 스튜디오 / 매장명"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
+                      className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
                     />
                   </div>
 
                   {/* Phone */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                      <Phone className="w-3.5 h-3.5 text-teal-600" />
+                    <label className="text-sm font-extrabold text-slate-900 flex items-center gap-1">
+                      <Phone className="w-4 h-4 text-teal-600" />
                       연락처 <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -584,14 +604,14 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="010-0000-0000"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
+                      className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
                     />
                   </div>
 
                   {/* Email */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                      <Mail className="w-3.5 h-3.5 text-teal-600" />
+                    <label className="text-sm font-extrabold text-slate-900 flex items-center gap-1">
+                      <Mail className="w-4 h-4 text-teal-600" />
                       이메일 주소 <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -600,7 +620,7 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="example@mintcle.com"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
+                      className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
                     />
                   </div>
                 </div>
@@ -608,11 +628,11 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Service Type */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-extrabold text-slate-800">희망 제작 홈페이지 유형</label>
+                    <label className="text-sm font-extrabold text-slate-900">희망 제작 홈페이지 유형</label>
                     <select
                       value={formData.serviceType}
                       onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500"
+                      className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 font-medium"
                     >
                       <option value="기업 홈페이지">기업 홈페이지</option>
                       <option value="소상공인 홈페이지">소상공인 홈페이지</option>
@@ -624,11 +644,11 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
 
                   {/* Target Budget */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-extrabold text-slate-800">생각하시는 예산 범주</label>
+                    <label className="text-sm font-extrabold text-slate-900">생각하시는 예산 범주</label>
                     <select
                       value={formData.estimatedBudget}
                       onChange={(e) => setFormData({ ...formData, estimatedBudget: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500"
+                      className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 font-medium"
                     >
                       <option value="50만원 이하">50만원 이하 (실속 기본형)</option>
                       <option value="50만 ~ 100만원">50만 ~ 100만원 (표준 추천형)</option>
@@ -641,16 +661,16 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
 
                 {/* Requirements Details */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-extrabold text-slate-800 flex items-center justify-between">
+                  <label className="text-sm font-extrabold text-slate-900 flex items-center justify-between">
                     <span>참고 사이트 및 세부 요청 사항</span>
-                    <span className="text-[11px] font-normal text-slate-500">마음에 드는 사이트 주소나 필요한 기능</span>
+                    <span className="text-xs text-slate-600 font-medium">마음에 드는 사이트 주소나 필요한 기능</span>
                   </label>
                   <textarea
                     rows={4}
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                    placeholder="예: 카페 매장 안내용 웹사이트로, 대표 메뉴 5개 사진과 오시는 길 지도가 잘 보였으면 좋겠습니다. 참고 사이트: https://example.com"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
+                    placeholder="예: 카페 매장 안내용 웹사이트로, 대표 메뉴 5개 사진과 오시는 길 지도가 잘 보였으면 좋겠습니다."
+                    className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-200"
                   />
                 </div>
 
@@ -659,17 +679,17 @@ export const InquirySection: React.FC<InquirySectionProps> = ({
                   id="submit-consultation-form-btn"
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 shadow-md transition-all cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl font-extrabold text-base text-white bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 shadow-md transition-all cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="w-5 h-5 animate-spin" />
                       <span>Formspree로 전송 중...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4" />
-                      <span>제작 상담 신청서 제출하기 (Formspree 전송)</span>
+                      <Send className="w-5 h-5" />
+                      <span>제작 상담 신청서 제출하기</span>
                     </>
                   )}
                 </button>

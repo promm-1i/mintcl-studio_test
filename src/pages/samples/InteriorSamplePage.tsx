@@ -23,6 +23,12 @@ export const InteriorSamplePage: React.FC = () => {
     details: '',
   });
 
+  const [beforeAfterState, setBeforeAfterState] = useState<{ [key: number]: boolean }>({});
+
+  const toggleBeforeAfter = (id: number) => {
+    setBeforeAfterState(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
   const projects = [
     {
       id: 1,
@@ -32,6 +38,7 @@ export const InteriorSamplePage: React.FC = () => {
       area: '34평 (112㎡)',
       style: '워밍 화이트 & 히든 도어 라인조명',
       img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
       tags: ['무몰딩 시공', '히든도어', '라인조명', '광폭 원목마루'],
     },
     {
@@ -42,6 +49,7 @@ export const InteriorSamplePage: React.FC = () => {
       area: '42평 (138㎡)',
       style: '노출 콘크리트 & 내추럴 목재 바',
       img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
       tags: ['커스텀 바 카운터', '조도 컨트롤', '노출천장'],
     },
     {
@@ -52,6 +60,7 @@ export const InteriorSamplePage: React.FC = () => {
       area: '42평 (138㎡)',
       style: '미니멀 그레이 & 세라믹 아일랜드',
       img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
       tags: ['대형 아일랜드 주방', '간접조명', '600각 포세린 타일'],
     },
     {
@@ -60,8 +69,9 @@ export const InteriorSamplePage: React.FC = () => {
       title: '판교 테크노밸리 IT 스튜디오 라운지',
       location: '경기도 성남시 분당구',
       area: '65평 (214㎡)',
-      style: '모듈러 스마트 스마트 오피스',
+      style: '모듈러 스마트 오피스',
       img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
       tags: ['음향 흡음재', '유리 파티션', '집중 회의실'],
     },
   ];
@@ -195,41 +205,69 @@ export const InteriorSamplePage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((p) => (
-            <div key={p.id} className="bg-[#1C1C1C] border border-[#2A2A2A] overflow-hidden group">
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#141414]">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute top-3 left-3 bg-[#141414]/90 border border-[#D4B993]/40 text-[#D4B993] px-2.5 py-1 text-[10px] font-bold">
-                  {p.area}
+          {filteredProjects.map((p) => {
+            const isBefore = !!beforeAfterState[p.id];
+            return (
+              <div key={p.id} className="bg-[#1C1C1C] border border-[#2A2A2A] overflow-hidden group">
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#141414]">
+                  <img
+                    src={isBefore ? p.beforeImg : p.img}
+                    alt={p.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-all duration-500"
+                  />
+                  <div className="absolute top-3 left-3 bg-[#141414]/90 border border-[#D4B993]/40 text-[#D4B993] px-2.5 py-1 text-[10px] font-bold">
+                    {p.area}
+                  </div>
+
+                  {/* Before / After Toggle Button */}
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-[#141414]/90 p-1 border border-[#2A2A2A] rounded">
+                    <button
+                      onClick={() => toggleBeforeAfter(p.id)}
+                      className={`px-2.5 py-1 text-[10px] font-bold transition-colors cursor-pointer ${
+                        !isBefore ? 'bg-[#D4B993] text-[#141414]' : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      시공 후 (After)
+                    </button>
+                    <button
+                      onClick={() => toggleBeforeAfter(p.id)}
+                      className={`px-2.5 py-1 text-[10px] font-bold transition-colors cursor-pointer ${
+                        isBefore ? 'bg-[#D4B993] text-[#141414]' : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      시공 전 (Before)
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-6 space-y-3">
-                <span className="text-[11px] text-[#D4B993] font-bold block">
-                  {p.location}
-                </span>
-                <h4 className="text-lg font-bold text-white group-hover:text-[#D4B993] transition-colors">
-                  {p.title}
-                </h4>
-                <p className="text-xs text-slate-400 font-light">
-                  컨셉: {p.style}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 pt-2">
-                  {p.tags.map((t, idx) => (
-                    <span key={idx} className="text-[10px] bg-[#2A2A2A] text-slate-300 px-2 py-0.5 border border-slate-800">
-                      #{t}
+                <div className="p-6 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] text-[#D4B993] font-bold block">
+                      {p.location}
                     </span>
-                  ))}
+                    <span className="text-[10px] text-slate-400 border border-slate-700 px-2 py-0.5">
+                      {isBefore ? '⚠️ 철거 전 상태' : '✓ 완공 포트폴리오'}
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white group-hover:text-[#D4B993] transition-colors">
+                    {p.title}
+                  </h4>
+                  <p className="text-xs text-slate-400 font-light">
+                    컨셉: {p.style}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {p.tags.map((t, idx) => (
+                      <span key={idx} className="text-[10px] bg-[#2A2A2A] text-slate-300 px-2 py-0.5 border border-slate-800">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
