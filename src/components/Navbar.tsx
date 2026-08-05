@@ -3,7 +3,6 @@ import { SectionId } from '../types';
 import { 
   Menu, 
   X, 
-  Lock, 
   Send,
   Phone,
   MessageSquare,
@@ -15,12 +14,14 @@ interface NavbarProps {
   activeSection: SectionId;
   onNavigate: (sectionId: SectionId) => void;
   onOpenAdminModal: () => void;
+  onOpenKakaoModal: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
   onNavigate,
   onOpenAdminModal,
+  onOpenKakaoModal,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -91,22 +92,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Desktop Navigation Links */}
           <nav id="desktop-nav" className="hidden lg:flex items-center gap-1.5">
             {navItems.map((item) => {
+              if (item.id === 'inquiry') return null;
               const isActive = activeSection === item.id;
-              const isInquiry = item.id === 'inquiry';
-
-              if (isInquiry) {
-                return (
-                  <button
-                    key={item.id}
-                    id={`nav-item-${item.id}`}
-                    onClick={() => handleNavClick('inquiry')}
-                    className="ml-2 px-4 py-2 rounded-xl text-sm font-extrabold text-white bg-amber-500 hover:bg-amber-600 shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
-                  >
-                    <Send className="w-4 h-4 text-white" />
-                    <span>문의하기</span>
-                  </button>
-                );
-              }
 
               return (
                 <button
@@ -125,47 +112,47 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Right Area Controls */}
-          <div className="hidden sm:flex items-center gap-3">
-            {/* Admin Panel Entry Button */}
+          {/* Right Area Controls: KakaoTalk & Green Estimate Inquiry */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            {/* KakaoTalk Consult Button */}
             <button
-              id="open-admin-panel-btn"
-              onClick={onOpenAdminModal}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 transition-all cursor-pointer border border-slate-200/90"
-              title="관리자 전용 로그인 (기획서 관리 & 접수 내역)"
+              id="header-kakao-btn"
+              onClick={onOpenKakaoModal}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-[#3C1E1E] bg-[#FEE500] hover:bg-[#fada0a] shadow-xs transition-all cursor-pointer border border-amber-300"
+              title="카카오톡 1:1 실시간 상담"
             >
-              <Lock className="w-4 h-4 text-slate-600" />
-              <span>관리자</span>
+              <MessageSquare className="w-4 h-4 fill-[#3C1E1E]" />
+              <span>카톡상담</span>
             </button>
 
-            {/* Main Inquiry CTA */}
+            {/* Main Estimate Inquiry CTA (Teal/Green) */}
             <button
               id="header-inquiry-cta"
               onClick={() => handleNavClick('inquiry')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-extrabold text-white bg-teal-600 hover:bg-teal-700 shadow-md transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white bg-teal-600 hover:bg-teal-700 shadow-md transition-all cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>제작 상담 문의</span>
+              <span>견적문의</span>
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 lg:hidden">
+          {/* Mobile Menu Toggle & Kakao Button */}
+          <div className="flex items-center gap-1.5 lg:hidden">
             <button
-              id="mobile-admin-btn"
-              onClick={onOpenAdminModal}
-              className="p-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200"
-              title="관리자 전용"
+              id="mobile-kakao-btn"
+              onClick={onOpenKakaoModal}
+              className="p-2 rounded-xl text-[#3C1E1E] bg-[#FEE500] hover:bg-[#fada0a] border border-amber-300"
+              title="카카오톡 1:1 상담"
             >
-              <Lock className="w-5 h-5 text-slate-600" />
+              <MessageSquare className="w-5 h-5 fill-[#3C1E1E]" />
             </button>
             <button
               id="mobile-menu-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl text-slate-800 hover:bg-slate-100 cursor-pointer"
+              className="p-2 rounded-xl text-slate-800 hover:bg-slate-100 cursor-pointer"
               aria-label="메뉴 열기"
             >
-              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
@@ -175,41 +162,45 @@ export const Navbar: React.FC<NavbarProps> = ({
         {mobileMenuOpen && (
           <div id="mobile-menu-drawer" className="lg:hidden bg-white border-b border-slate-200 px-5 pt-4 pb-6 space-y-3 shadow-xl">
             <div className="grid grid-cols-2 gap-2 mb-3">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  id={`mobile-nav-${item.id}`}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`px-4 py-3 rounded-xl text-base font-bold text-left transition-colors cursor-pointer ${
-                    activeSection === item.id
-                      ? 'bg-teal-50 text-teal-800 font-extrabold border border-teal-200'
-                      : 'text-slate-800 hover:bg-slate-100'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {navItems.map((item) => {
+                if (item.id === 'inquiry') return null;
+                return (
+                  <button
+                    key={item.id}
+                    id={`mobile-nav-${item.id}`}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`px-4 py-3 rounded-xl text-base font-bold text-left transition-colors cursor-pointer ${
+                      activeSection === item.id
+                        ? 'bg-teal-50 text-teal-800 font-extrabold border border-teal-200'
+                        : 'text-slate-800 hover:bg-slate-100'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="pt-3 border-t border-slate-200 flex flex-col gap-2.5">
+            <div className="pt-3 border-t border-slate-200 flex flex-col gap-2">
               <button
-                id="mobile-drawer-admin"
+                id="mobile-drawer-kakao"
                 onClick={() => {
-                  onOpenAdminModal();
+                  onOpenKakaoModal();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-slate-800 bg-slate-100 border border-slate-200"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-extrabold text-[#3C1E1E] bg-[#FEE500] hover:bg-[#fada0a] border border-amber-300 shadow-xs"
               >
-                <Lock className="w-4 h-4 text-slate-600" />
-                <span>관리자 전용 로그인 (기획서 & 문의 관리)</span>
+                <MessageSquare className="w-4 h-4 fill-[#3C1E1E]" />
+                <span>카카오톡 1:1 실시간 상담</span>
               </button>
+
               <button
                 id="mobile-drawer-inquiry"
                 onClick={() => handleNavClick('inquiry')}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-base font-extrabold text-white bg-amber-500 hover:bg-amber-600 shadow-md"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-extrabold text-white bg-teal-600 hover:bg-teal-700 shadow-md"
               >
-                <Send className="w-5 h-5 text-white" />
-                <span>문의하기 (실시간 견적 & 제작 상담)</span>
+                <Send className="w-4 h-4 text-white" />
+                <span>견적문의 (무료 산출 & 상담)</span>
               </button>
             </div>
           </div>
@@ -219,11 +210,11 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* PERSISTENT FLOATING QUICK NAVIGATION BANNER (Visible on scroll - Sleek Single Column Vertical Bar) */}
       {isScrolled && (
         <div className="fixed right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center">
-          <div className="bg-slate-900/95 text-white backdrop-blur-md p-2 rounded-2xl border border-slate-700/90 shadow-2xl flex flex-col items-center gap-1.5 w-14 sm:w-16 select-none">
+          <div className="bg-slate-900/95 text-white backdrop-blur-md p-1.5 sm:p-2 rounded-2xl border border-slate-700/90 shadow-2xl flex flex-col items-center gap-1.5 w-13 sm:w-15 select-none">
             
             {/* Top Brand Indicator */}
-            <div className="flex flex-col items-center gap-0.5 pb-1.5 border-b border-slate-800 w-full text-center">
-              <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+            <div className="flex flex-col items-center gap-0.5 pb-1 border-b border-slate-800 w-full text-center">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
               <span className="text-[9px] font-extrabold text-teal-300 tracking-tighter">민트클</span>
             </div>
 
@@ -231,7 +222,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex flex-col gap-1 w-full text-center">
               {navItems.map((item) => {
                 if (item.id === 'inquiry') return null;
-                // Shorten labels for vertical bar
                 const displayLabel = item.id === 'home' ? '홈' :
                                    item.id === 'services' ? '서비스' :
                                    item.id === 'portfolio' ? '샘플' :
@@ -242,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
-                    className={`w-full py-1.5 rounded-lg transition-all cursor-pointer text-[11px] font-bold text-center ${
+                    className={`w-full py-1 rounded-lg transition-all cursor-pointer text-[10px] sm:text-[11px] font-bold text-center ${
                       activeSection === item.id
                         ? 'bg-teal-500 text-slate-950 font-extrabold shadow-xs'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
@@ -254,15 +244,28 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
             </div>
 
-            {/* Compact Highlighted Vertical '문의' CTA Button */}
+            <div className="w-full border-t border-slate-800 my-0.5" />
+
+            {/* 1. Kakao Button */}
+            <button
+              id="floating-kakao-btn"
+              onClick={onOpenKakaoModal}
+              className="w-full py-1.5 px-0.5 rounded-xl text-[10px] font-extrabold text-[#3C1E1E] bg-[#FEE500] hover:bg-[#fada0a] transition-all shadow-xs cursor-pointer flex flex-col items-center justify-center leading-tight border border-amber-300"
+              title="카카오톡 상담"
+            >
+              <MessageSquare className="w-3.5 h-3.5 fill-[#3C1E1E] mb-0.5" />
+              <span>카톡</span>
+            </button>
+
+            {/* 2. Green Estimate Inquiry Button */}
             <button
               id="floating-banner-inquiry-btn"
               onClick={() => handleNavClick('inquiry')}
-              className="w-full py-2.5 px-0.5 rounded-xl text-[11px] font-extrabold text-slate-950 bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500 hover:brightness-110 transition-all shadow-md cursor-pointer flex flex-col items-center justify-center leading-tight mt-1"
+              className="w-full py-1.5 px-0.5 rounded-xl text-[10px] font-extrabold text-white bg-teal-600 hover:bg-teal-500 transition-all shadow-xs cursor-pointer flex flex-col items-center justify-center leading-tight"
+              title="견적 문의"
             >
-              <Send className="w-3.5 h-3.5 text-slate-950 mb-0.5" />
+              <Send className="w-3.5 h-3.5 text-white mb-0.5" />
               <span>견적</span>
-              <span>문의</span>
             </button>
 
           </div>

@@ -9,6 +9,7 @@ import { FaqSection } from './components/FaqSection';
 import { InquirySection } from './components/InquirySection';
 import { PlanningDocModal } from './components/PlanningDocModal';
 import { AdminModal } from './components/AdminModal';
+import { KakaoModal } from './components/KakaoModal';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 
@@ -26,6 +27,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [isPlanningModalOpen, setIsPlanningModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isKakaoModalOpen, setIsKakaoModalOpen] = useState(false);
   const [preSelectedServiceTitle, setPreSelectedServiceTitle] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -95,6 +97,7 @@ export default function App() {
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenAdminModal={() => setIsAdminModalOpen(true)}
+        onOpenKakaoModal={() => setIsKakaoModalOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -148,6 +151,14 @@ export default function App() {
         onClose={() => setIsAdminModalOpen(false)}
         onShowToast={showToast}
         onOpenPlanningModal={() => setIsPlanningModalOpen(true)}
+      />
+
+      {/* KakaoTalk 1:1 Consultation Modal */}
+      <KakaoModal
+        isOpen={isKakaoModalOpen}
+        onClose={() => setIsKakaoModalOpen(false)}
+        onNavigateToInquiry={() => handleNavigate('inquiry')}
+        onShowToast={showToast}
       />
 
       {/* Footer */}
