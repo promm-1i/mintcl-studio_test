@@ -20,10 +20,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onNavigate,
 }) => {
   return (
-    <section id="home-section" className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-100 overflow-hidden">
-      {/* Background Decorative Mint Accent Lines */}
-      <div className="absolute top-0 right-0 -translate-y-12 translate-x-1/3 w-96 h-96 bg-teal-100/40 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/4 w-80 h-80 bg-emerald-100/30 rounded-full blur-3xl pointer-events-none" />
+    <section id="home-section" className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 bg-slate-900 text-white border-b border-slate-800 overflow-hidden bg-grid-dark">
+      {/* Dynamic Ambient Background Glows & Animated Motion Blobs */}
+      <div className="absolute top-1/4 right-10 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-10 left-1/3 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-float-slow" style={{ animationDelay: '2s' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -32,21 +33,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-7 space-y-6 text-left">
             
             {/* Trust Tag */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-50 text-amber-900 border border-amber-200/90 shadow-2xs">
-              <Sparkles className="w-4 h-4 text-amber-600" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 shadow-2xs">
+              <Sparkles className="w-4 h-4 text-amber-400" />
               <span>기업 & 소상공인 맞춤 웹스튜디오</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight font-sans">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight font-sans">
               과장 없이 명확한 기획,<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-700 via-teal-600 to-indigo-700">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-emerald-300 to-amber-300">
                 투명한 공정의 한국형 웹사이트 제작
               </span>
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal max-w-2xl">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
               민트클 웹스튜디오는 불필요한 거품을 뺀 명확한 화면 설계와 100% 모바일 반응형 웹표준 기술로 기업과 소상공인의 브랜드 가치를 완성합니다.
             </p>
 
@@ -59,10 +60,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 { title: '오픈 후 1개월 무상 A/S 보증', desc: '텍스트 수정 및 오류 빠른 대응' },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-sm font-bold text-slate-900 block">{item.title}</span>
-                    <span className="text-xs text-slate-600 font-medium">{item.desc}</span>
+                    <span className="text-sm font-bold text-slate-100 block">{item.title}</span>
+                    <span className="text-xs text-slate-400 font-medium">{item.desc}</span>
                   </div>
                 </div>
               ))}
@@ -100,26 +101,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Right Hero Interactive Preview Card */}
           <div className="lg:col-span-5">
-            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl p-5 sm:p-6 space-y-5 relative">
+            <div className="bg-slate-800/90 rounded-2xl border border-slate-700/80 shadow-2xl p-5 sm:p-6 space-y-5 relative backdrop-blur-md">
               
               {/* Header Badge */}
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div className="flex items-center justify-between border-b border-slate-700 pb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-400 inline-block" />
                   <span className="w-3 h-3 rounded-full bg-yellow-400 inline-block" />
                   <span className="w-3 h-3 rounded-full bg-green-400 inline-block" />
-                  <span className="text-xs font-mono font-bold text-slate-600 ml-2">mintcle.studio/quick-preview</span>
+                  <span className="text-xs font-mono font-bold text-slate-300 ml-2">mintcle.studio/quick-preview</span>
                 </div>
-                <span className="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200/60">
+                <span className="text-[11px] font-semibold text-teal-300 bg-teal-950/80 px-2.5 py-1 rounded-md border border-teal-800/60">
                   실시간 맞춤 가이드
                 </span>
               </div>
 
               {/* Quick Estimator Snapshot Card */}
-              <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-200/70 space-y-3">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+              <div className="bg-slate-900/90 rounded-xl p-4 border border-slate-700/70 space-y-3">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-200">
                   <span>추천 제작 유형 빠른 선택</span>
-                  <span className="text-teal-600">투명 산정</span>
+                  <span className="text-teal-400">투명 산정</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
@@ -132,14 +133,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <div 
                       key={idx}
                       onClick={() => onNavigate('inquiry')}
-                      className="p-2.5 bg-white rounded-lg border border-slate-200 hover:border-teal-400 hover:shadow-xs transition-all cursor-pointer text-left group"
+                      className="p-2.5 bg-slate-800/80 rounded-lg border border-slate-700 hover:border-teal-400 hover:bg-slate-800 transition-all cursor-pointer text-left group"
                     >
-                      <div className="text-xs font-bold text-slate-800 group-hover:text-teal-700 flex items-center justify-between">
+                      <div className="text-xs font-bold text-slate-200 group-hover:text-teal-300 flex items-center justify-between">
                         <span>{item.name}</span>
-                        <span className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">{item.price}</span>
+                        <span className="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded">{item.price}</span>
                       </div>
-                      <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-teal-600" />
+                      <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-teal-400" />
                         <span>예상 {item.time}</span>
                       </div>
                     </div>
@@ -149,24 +150,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               {/* Visual Layout Mockup Snippet */}
               <div className="space-y-2 text-left">
-                <div className="text-xs font-bold text-slate-700 flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-300 flex items-center justify-between">
                   <span>민트클 제공 기본 포함 혜택</span>
                   <span className="text-[11px] text-slate-400">추가비용 없음</span>
                 </div>
                 <div className="space-y-1.5">
-                  <div className="p-2 bg-slate-50 rounded-lg text-xs text-slate-700 flex items-center justify-between border border-slate-100">
+                  <div className="p-2 bg-slate-900/60 rounded-lg text-xs text-slate-300 flex items-center justify-between border border-slate-700/60">
                     <span className="flex items-center gap-1.5 font-medium">
-                      <Smartphone className="w-3.5 h-3.5 text-teal-600" />
+                      <Smartphone className="w-3.5 h-3.5 text-teal-400" />
                       모바일 1초 카카오톡 / 전화 연결 버튼
                     </span>
-                    <span className="text-teal-600 font-bold text-[11px]">기본 탑재</span>
+                    <span className="text-teal-400 font-bold text-[11px]">기본 탑재</span>
                   </div>
-                  <div className="p-2 bg-slate-50 rounded-lg text-xs text-slate-700 flex items-center justify-between border border-slate-100">
+                  <div className="p-2 bg-slate-900/60 rounded-lg text-xs text-slate-300 flex items-center justify-between border border-slate-700/60">
                     <span className="flex items-center gap-1.5 font-medium">
-                      <Search className="w-3.5 h-3.5 text-teal-600" />
+                      <Search className="w-3.5 h-3.5 text-teal-400" />
                       네이버·구글 지도 & 위치 검색 등록 가이드
                     </span>
-                    <span className="text-teal-600 font-bold text-[11px]">기본 제공</span>
+                    <span className="text-teal-400 font-bold text-[11px]">기본 제공</span>
                   </div>
                 </div>
               </div>
@@ -175,10 +176,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 id="hero-quick-consult-btn"
                 onClick={() => onNavigate('inquiry')}
-                className="w-full py-2.5 rounded-lg text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 border border-teal-200 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                className="w-full py-3 rounded-xl text-xs sm:text-sm font-bold text-slate-950 bg-teal-400 hover:bg-teal-300 border border-teal-300 transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-md"
               >
                 <span>내 프로젝트 예상 비용 바로 산출하기</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
 
             </div>

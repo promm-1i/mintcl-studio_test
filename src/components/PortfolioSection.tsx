@@ -184,33 +184,41 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                     </div>
                   </div>
 
-                  {/* PROMINENT LARGE IMAGE FRAME (Aspect 16:9 / 16:10 for High Impact) */}
+                  {/* CLEAN HIGH-IMPACT THUMBNAIL (Unobstructed Cover Image) */}
                   <div 
                     onClick={() => handleOpenSamplePage(sample.samplePath)}
-                    className="relative aspect-[16/10] sm:aspect-[16/9] bg-slate-950 overflow-hidden cursor-pointer group/img"
+                    className="relative aspect-[16/10] sm:aspect-[16/9] bg-slate-900 overflow-hidden cursor-pointer group/img select-none border-b border-slate-100"
                   >
+                    {/* Background Full Cover Photo - High Contrast & Crisp Visibility */}
                     <img
                       src={sample.coverImage}
-                      alt={`${sample.title} 대형 메인 시안 이미지`}
+                      alt={`${sample.title} 실제 구축 시안`}
                       loading="lazy"
                       className="w-full h-full object-cover object-top group-hover/img:scale-105 transition-transform duration-700"
                     />
 
-                    {/* Hover Overlay Badge */}
-                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                      <div className="bg-slate-900/90 text-white backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 font-bold text-sm sm:text-base flex items-center gap-2 shadow-2xl">
-                        <Eye className="w-5 h-5 text-teal-400" />
-                        <span>독립 샘플 웹사이트 직접 체험하기</span>
-                        <ExternalLink className="w-4 h-4 text-slate-300" />
-                      </div>
+                    {/* Subtle Top Badges */}
+                    <div className="absolute top-3 left-3 bg-slate-900/85 text-teal-300 border border-teal-400/40 px-3 py-1 rounded-lg text-xs font-bold shadow-md backdrop-blur-xs flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+                      <span>{sample.type} 시안</span>
                     </div>
 
-                    <div className="absolute bottom-3 left-3 bg-slate-900/90 text-teal-300 border border-teal-500/40 px-3 py-1 rounded-lg text-xs font-bold shadow-md">
-                      Concept Work (실제 동작 독립시안)
+                    <div className="absolute top-3 right-3 bg-amber-400 text-slate-950 px-2.5 py-1 rounded-lg text-xs font-extrabold shadow-md flex items-center gap-1">
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>체험 사이트</span>
+                    </div>
+
+                    {/* Hover Full Screen Overlay Badge */}
+                    <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 z-10 backdrop-blur-xs">
+                      <div className="bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-extrabold px-6 py-3.5 rounded-2xl shadow-2xl text-xs sm:text-sm flex items-center gap-2 transform group-hover/img:scale-105 transition-transform">
+                        <Eye className="w-5 h-5 text-slate-950" />
+                        <span>독립 페이지 전체 화면으로 체험하기</span>
+                        <ExternalLink className="w-4 h-4 text-slate-950" />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Card Content Description Area */}
+                  {/* Card Content Description Area (All Text & Mockup Highlights Placed Below Image) */}
                   <div className="p-6 sm:p-8 space-y-5">
                     
                     <div>
@@ -227,6 +235,33 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                       {sample.description}
                     </p>
+
+                    {/* MOCKUP HIGHLIGHTS (Moved Below Image for High Readability) */}
+                    <div className="bg-slate-900 text-white p-4 rounded-2xl border border-slate-800 space-y-3">
+                      <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-800">
+                        <span className="font-extrabold text-teal-300 flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+                          <span>시안 핵심 컨셉 & 섹션 구성</span>
+                        </span>
+                        <span className="text-[10px] bg-teal-950 text-teal-300 px-2 py-0.5 rounded border border-teal-800/60 font-semibold">
+                          {sample.mockupDetails.primaryCta}
+                        </span>
+                      </div>
+
+                      <div className="text-xs sm:text-sm font-bold text-slate-100">
+                        "{sample.mockupDetails.heroHeading}"
+                      </div>
+
+                      {/* Section Chips */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-1">
+                        {sample.mockupDetails.sections.map((sec, idx) => (
+                          <div key={idx} className="bg-slate-800/90 p-2 rounded-xl border border-slate-700/80 text-left">
+                            <div className="text-[11px] font-bold text-teal-300 truncate">{sec.name}</div>
+                            <div className="text-[10px] text-slate-400 truncate">{sec.desc}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
                     {/* Explicit Metadata Specs Grid */}
                     <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/90 text-xs text-slate-700 space-y-2">

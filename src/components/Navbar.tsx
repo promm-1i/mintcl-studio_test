@@ -216,44 +216,56 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
       </header>
 
-      {/* PERSISTENT FLOATING QUICK NAVIGATION BANNER (Visible on scroll) */}
+      {/* PERSISTENT FLOATING QUICK NAVIGATION BANNER (Visible on scroll - Sleek Single Column Vertical Bar) */}
       {isScrolled && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-slate-900/90 text-white backdrop-blur-md px-3 sm:px-5 py-2.5 rounded-2xl border border-slate-700/80 shadow-2xl flex items-center gap-2 sm:gap-4 max-w-[95vw]">
-          
-          <div className="hidden md:flex items-center gap-1.5 text-xs text-slate-300 pr-2 border-r border-slate-700">
-            <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-            <span className="font-bold text-white">민트클 웹스튜디오</span>
-          </div>
+        <div className="fixed right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center">
+          <div className="bg-slate-900/95 text-white backdrop-blur-md p-2 rounded-2xl border border-slate-700/90 shadow-2xl flex flex-col items-center gap-1.5 w-14 sm:w-16 select-none">
+            
+            {/* Top Brand Indicator */}
+            <div className="flex flex-col items-center gap-0.5 pb-1.5 border-b border-slate-800 w-full text-center">
+              <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+              <span className="text-[9px] font-extrabold text-teal-300 tracking-tighter">민트클</span>
+            </div>
 
-          {/* Quick Nav Buttons */}
-          <div className="flex items-center gap-1 text-xs font-semibold">
-            {navItems.map((item) => {
-              if (item.id === 'inquiry') return null; // handled separately as big CTA
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer text-xs sm:text-sm font-medium ${
-                    activeSection === item.id
-                      ? 'bg-teal-500 text-slate-950 font-bold'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
+            {/* Quick Nav Items - Single Vertical Column */}
+            <div className="flex flex-col gap-1 w-full text-center">
+              {navItems.map((item) => {
+                if (item.id === 'inquiry') return null;
+                // Shorten labels for vertical bar
+                const displayLabel = item.id === 'home' ? '홈' :
+                                   item.id === 'services' ? '서비스' :
+                                   item.id === 'portfolio' ? '샘플' :
+                                   item.id === 'process' ? '절차' :
+                                   item.id === 'faq' ? 'FAQ' : item.label;
 
-          {/* Mandatory Highlighted Floating '문의하기' CTA */}
-          <button
-            id="floating-banner-inquiry-btn"
-            onClick={() => handleNavClick('inquiry')}
-            className="px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all shadow-md cursor-pointer flex items-center gap-1.5 shrink-0"
-          >
-            <Send className="w-4 h-4 text-slate-950" />
-            <span>문의하기</span>
-          </button>
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`w-full py-1.5 rounded-lg transition-all cursor-pointer text-[11px] font-bold text-center ${
+                      activeSection === item.id
+                        ? 'bg-teal-500 text-slate-950 font-extrabold shadow-xs'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                    }`}
+                  >
+                    {displayLabel}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Compact Highlighted Vertical '문의' CTA Button */}
+            <button
+              id="floating-banner-inquiry-btn"
+              onClick={() => handleNavClick('inquiry')}
+              className="w-full py-2.5 px-0.5 rounded-xl text-[11px] font-extrabold text-slate-950 bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500 hover:brightness-110 transition-all shadow-md cursor-pointer flex flex-col items-center justify-center leading-tight mt-1"
+            >
+              <Send className="w-3.5 h-3.5 text-slate-950 mb-0.5" />
+              <span>견적</span>
+              <span>문의</span>
+            </button>
+
+          </div>
         </div>
       )}
     </>
