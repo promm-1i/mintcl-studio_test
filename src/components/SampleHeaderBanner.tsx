@@ -13,14 +13,14 @@ export const SampleHeaderBanner: React.FC<SampleHeaderBannerProps> = ({
   onInquiryClick,
 }) => {
   const handleGoHome = () => {
-    window.location.href = '/#portfolio';
+    window.location.href = '/#portfolio-section';
   };
 
   const handleInquire = () => {
     if (onInquiryClick) {
       onInquiryClick();
     } else {
-      window.location.href = '/#inquiry';
+      window.location.href = '/#inquiry-section';
     }
   };
 

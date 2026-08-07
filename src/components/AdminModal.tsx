@@ -33,6 +33,12 @@ export const AdminModal: React.FC<AdminModalProps> = ({
   onShowToast,
   onOpenPlanningModal,
 }) => {
+  // SECURITY TODO: this panel's auth is client-side only (password compared in the browser
+  // against a value stored in localStorage — see `mintcle_admin_password` below). Anyone can
+  // read/bypass it via devtools; it is not real access control for the inquiry data it exposes.
+  // Before this handles real customer data, replace with a server-verified auth provider
+  // (e.g. Supabase Auth + RLS scoping inquiries to an admin role) rather than hardening this
+  // client check further.
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [passwordInput, setPasswordInput] = useState<string>('');

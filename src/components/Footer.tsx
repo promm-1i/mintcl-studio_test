@@ -60,13 +60,13 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('services')} className="hover:text-amber-300 transition-colors font-medium cursor-pointer">
-                  서비스 소개 (5가지 맞춤 유형)
+                <button onClick={() => onNavigate('portfolio')} className="hover:text-amber-300 transition-colors font-medium cursor-pointer">
+                  포트폴리오 (독립 샘플 7종)
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('portfolio')} className="hover:text-amber-300 transition-colors font-medium cursor-pointer">
-                  포트폴리오 (독립 샘플 6종)
+                <button onClick={() => onNavigate('services')} className="hover:text-amber-300 transition-colors font-medium cursor-pointer">
+                  서비스 소개 (5가지 맞춤 유형)
                 </button>
               </li>
               <li>

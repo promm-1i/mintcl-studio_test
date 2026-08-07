@@ -41,8 +41,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navItems: { id: SectionId; label: string }[] = [
     { id: 'home', label: '홈' },
-    { id: 'services', label: '서비스 소개' },
     { id: 'portfolio', label: '포트폴리오' },
+    { id: 'services', label: '서비스' },
     { id: 'process', label: '제작 절차' },
     { id: 'faq', label: '자주 묻는 질문' },
     { id: 'inquiry', label: '문의하기' },
@@ -58,10 +58,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Sticky Top Navigation Header */}
       <header
         id="main-navbar"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-md py-2.5'
-            : 'bg-white/90 backdrop-blur-sm border-b border-slate-100 py-3.5'
+            ? 'bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm py-2.5'
+            : 'bg-white/70 backdrop-blur-[2px] border-b border-transparent py-4'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">

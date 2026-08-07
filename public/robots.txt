@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mintclstudiotest.netlify.app/sitemap.xml

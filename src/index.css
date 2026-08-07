@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+/*
+  Brand tokens. Mint stays an ACCENT only — base surfaces are white / off-white / charcoal.
+  Existing teal-* utilities across the app already carry the mint brand color, so these
+  tokens are additive (new editorial surfaces) rather than a site-wide rename.
+*/
+@theme {
+  --color-mint-50: #ecfdf6;
+  --color-mint-100: #d1fae3;
+  --color-mint-300: #6ee7bf;
+  --color-mint-400: #34d399;
+  --color-mint-500: #10b985;
+  --color-mint-600: #0d9668;
+  --color-mint-700: #0f7a58;
+  --color-mint-900: #0b4a37;
+
+  --color-offwhite: #faf9f7;
+  --color-charcoal: #17181b;
+  --color-charcoal-800: #212226;
+  --color-charcoal-700: #2b2c31;
+}
+
 @layer utilities {
   @keyframes floatSlow {
     0%, 100% {

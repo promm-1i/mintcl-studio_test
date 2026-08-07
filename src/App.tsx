@@ -21,6 +21,21 @@ import { BeautySamplePage } from './pages/samples/BeautySamplePage';
 import { AppSamplePage } from './pages/samples/AppSamplePage';
 import { HospitalSamplePage } from './pages/samples/HospitalSamplePage';
 import { RestaurantSamplePage } from './pages/samples/RestaurantSamplePage';
+import { PORTFOLIO_SAMPLES } from './data/portfolioData';
+
+const DEFAULT_TITLE = '민트클 웹스튜디오';
+const DEFAULT_DESCRIPTION = '기업과 소상공인을 위한 홈페이지 제작, 반응형 웹사이트 및 랜딩페이지 제작 서비스';
+
+function getRouteMeta(path: string): { title: string; description: string } {
+  const sample = PORTFOLIO_SAMPLES.find((s) => s.samplePath === path);
+  if (sample) {
+    return {
+      title: `${sample.title} | MintCL`,
+      description: sample.description,
+    };
+  }
+  return { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION };
+}
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -39,6 +54,26 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Per-route SEO: document.title + meta description for home vs each /samples/* page
+  useEffect(() => {
+    const normalizedPath = currentPath.replace(/\/$/, '') || '/';
+    const { title, description } = getRouteMeta(normalizedPath);
+    document.title = title;
+
+    const descriptionTag = document.querySelector('meta[name="description"]');
+    if (descriptionTag) {
+      descriptionTag.setAttribute('content', description);
+    }
+    const ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) {
+      ogTitleTag.setAttribute('content', title);
+    }
+    const ogDescriptionTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescriptionTag) {
+      ogDescriptionTag.setAttribute('content', description);
+    }
+  }, [currentPath]);
+
   // Automatic ScrollSpy to sync activeSection with current visible section as user scrolls
   useEffect(() => {
     const normalizePath = currentPath.replace(/\/$/, '');
@@ -46,8 +81,8 @@ export default function App() {
 
     const sections: { id: SectionId; elementId: string }[] = [
       { id: 'home', elementId: 'home-section' },
-      { id: 'services', elementId: 'services-section' },
       { id: 'portfolio', elementId: 'portfolio-section' },
+      { id: 'services', elementId: 'services-section' },
       { id: 'process', elementId: 'process-section' },
       { id: 'faq', elementId: 'faq-section' },
       { id: 'inquiry', elementId: 'inquiry-section' },
@@ -162,14 +197,14 @@ export default function App() {
           onNavigate={handleNavigate}
         />
 
-        {/* 2. 서비스 소개 (Services) */}
-        <ServicesSection
+        {/* 2. 포트폴리오 (제작 가능 샘플 유형) — 서비스 설명보다 실제 결과물을 먼저 보여준다 */}
+        <PortfolioSection
           onSelectServiceForInquiry={handleSelectServiceForInquiry}
           onNavigate={handleNavigate}
         />
 
-        {/* 3. 포트폴리오 (제작 가능 샘플 유형) */}
-        <PortfolioSection
+        {/* 3. 서비스 소개 (Services) */}
+        <ServicesSection
           onSelectServiceForInquiry={handleSelectServiceForInquiry}
           onNavigate={handleNavigate}
         />

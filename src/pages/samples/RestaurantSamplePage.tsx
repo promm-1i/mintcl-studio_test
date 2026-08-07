@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
 import { 
   Utensils, 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export const RestaurantSamplePage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [activeCategory, setActiveCategory] = useState<'beef' | 'pork' | 'lunch' | 'drink'>('beef');
   const [reservationDone, setReservationDone] = useState(false);
   const [resData, setResData] = useState({
@@ -139,7 +141,12 @@ export const RestaurantSamplePage: React.FC = () => {
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80')` }} />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
+        <motion.div
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6"
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-amber-500/20 text-amber-300 border border-amber-400/40">
             <Flame className="w-4 h-4 text-amber-400" />
             <span>국산 최상급 참숯과 1++ 한우 직화 구이</span>
@@ -171,7 +178,7 @@ export const RestaurantSamplePage: React.FC = () => {
               <span>대표 메뉴판 확인</span>
             </a>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Menu Section */}

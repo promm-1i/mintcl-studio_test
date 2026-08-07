@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
 import { 
   Sparkles, 
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react';
 
 export const InteriorSamplePage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'apartment' | 'commercial' | 'office'>('all');
   const [consultSubmitted, setConsultSubmitted] = useState(false);
   const [pyung, setPyung] = useState(34);
@@ -208,7 +210,14 @@ export const InteriorSamplePage: React.FC = () => {
           {filteredProjects.map((p) => {
             const isBefore = !!beforeAfterState[p.id];
             return (
-              <div key={p.id} className="bg-[#1C1C1C] border border-[#2A2A2A] overflow-hidden group">
+              <motion.div
+                key={p.id}
+                className="bg-[#1C1C1C] border border-[#2A2A2A] overflow-hidden group"
+                initial={prefersReducedMotion ? undefined : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+                whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+              >
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#141414]">
                   <img
                     src={isBefore ? p.beforeImg : p.img}
@@ -265,7 +274,7 @@ export const InteriorSamplePage: React.FC = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/cafe</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/hospital</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/company</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/interior</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/beauty</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/restaurant</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mintclstudiotest.netlify.app/samples/app</loc>
+    <priority>0.6</priority>
+  </url>
+</urlset>

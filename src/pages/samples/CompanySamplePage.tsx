@@ -238,41 +238,43 @@ export const CompanySamplePage: React.FC = () => {
             </div>
           </section>
 
-          {/* Quick Business Overview */}
-          <section className="py-20 px-6 max-w-6xl mx-auto text-left">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-              <div>
-                <span className="text-xs font-bold text-[#38BDF8] uppercase tracking-wider block mb-1">
-                  Core Competency
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  기업 핵심 기술 영역
-                </h3>
-              </div>
-              <button 
-                onClick={() => setCurrentSubPage('business')}
-                className="text-xs font-bold text-[#38BDF8] hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                <span>전체 사업영역 상세 보기</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {[
-                { title: '클라우드 인프라', desc: 'AWS/GCP/GCP 멀티 클라우드 이중화 및 오토스케일링 구축' },
-                { title: '빅데이터 엔진', desc: '초당 10만건 트랜잭션 실시간 수집 및 경영지표 대시보드' },
-                { title: '한국어 AI RAG', desc: '기업 내부 지식 기반 프라이빗 LLM 업무 자동화' },
-                { title: 'ISMS-P 보안 컨설팅', desc: '정부 보안 인증 및 24시간 실시간 무사고 관제' },
-              ].map((item, idx) => (
-                <div key={idx} className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#0284C7]/20 text-[#38BDF8] flex items-center justify-center font-bold text-sm">
-                    0{idx+1}
-                  </div>
-                  <h4 className="font-extrabold text-base text-white">{item.title}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+          {/* Quick Business Overview — light band for dark/light rhythm, editorial numbered list instead of icon cards */}
+          <section className="py-20 px-6 bg-white text-[#0F172A]">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+                <div>
+                  <span className="text-xs font-bold text-[#0284C7] uppercase tracking-wider block mb-1">
+                    Core Competency
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A]">
+                    기업 핵심 기술 영역
+                  </h3>
                 </div>
-              ))}
+                <button
+                  onClick={() => setCurrentSubPage('business')}
+                  className="text-xs font-bold text-[#0284C7] hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <span>전체 사업영역 상세 보기</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="divide-y divide-slate-200 border-y border-slate-200">
+                {[
+                  { title: '클라우드 인프라', desc: 'AWS/GCP/NHN 멀티 클라우드 이중화 및 오토스케일링 구축' },
+                  { title: '빅데이터 엔진', desc: '초당 10만건 트랜잭션 실시간 수집 및 경영지표 대시보드' },
+                  { title: '한국어 AI RAG', desc: '기업 내부 지식 기반 프라이빗 LLM 업무 자동화' },
+                  { title: 'ISMS-P 보안 컨설팅', desc: '정부 보안 인증 및 24시간 실시간 무사고 관제' },
+                ].map((item, idx) => (
+                  <div key={idx} className="py-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-8 group">
+                    <span className="font-mono text-sm text-slate-300 font-bold w-10 shrink-0 group-hover:text-[#0284C7] transition-colors">
+                      0{idx + 1}
+                    </span>
+                    <h4 className="font-extrabold text-lg sm:w-64 shrink-0">{item.title}</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         </div>

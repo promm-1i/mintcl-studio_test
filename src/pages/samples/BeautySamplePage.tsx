@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
 import { 
   Sparkles, 
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export const BeautySamplePage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedStylist, setSelectedStylist] = useState<string>('all');
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -180,7 +182,12 @@ export const BeautySamplePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative">
+          <motion.div
+            className="lg:col-span-5 relative"
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
             <div className="relative rounded-3xl overflow-hidden shadow-xl border-4 border-white aspect-[4/5]">
               <img
                 src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
@@ -195,7 +202,7 @@ export const BeautySamplePage: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>

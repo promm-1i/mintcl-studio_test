@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
 import { 
   Coffee, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export const CafeSamplePage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'bread' | 'coffee' | 'dessert'>('all');
   const [reservationSubmitted, setReservationSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -185,7 +187,12 @@ export const CafeSamplePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative">
+          <motion.div
+            className="lg:col-span-5 relative"
+            initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+          >
             <div className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white aspect-[4/3] lg:aspect-[3/4]">
               <img
                 src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80"
@@ -200,7 +207,7 @@ export const CafeSamplePage: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -238,52 +245,27 @@ export const CafeSamplePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3 relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
-                  1차 출하 08:30
-                </span>
-                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  갓 구워짐
-                </span>
+          {/* Horizontal scroll gallery — intentionally not a symmetric 3-card grid */}
+          <div className="flex gap-5 overflow-x-auto pb-3 -mx-6 px-6 snap-x snap-mandatory">
+            {[
+              { time: '1차 출하 08:30', status: '갓 구워짐', statusClass: 'text-emerald-700 bg-emerald-50 border-emerald-200', title: '시그니처 고메 소금빵 & 우유 식빵', desc: '출근길을 채우는 따뜻한 고소함. 천일염 버터 풍미가 가장 깊은 시간대입니다.' },
+              { time: '2차 출하 11:30', status: '판매 진행 중', statusClass: 'text-amber-700 bg-amber-50 border-amber-200', title: '앙버터 스콘 & 크루아상 라인', desc: '점심시간 디저트로 인기 높은 바삭한 결의 페이스트리와 프리미엄 스콘입니다.' },
+              { time: '3차 출하 14:30', status: '오픈 대기중', statusClass: 'text-sky-700 bg-sky-50 border-sky-200', title: '제주 말차 타르트 & 딸기 케이크', desc: '오후 티타임을 완성하는 수제 케이크 및 선물용 디저트 라인업입니다.' },
+            ].map((slot, idx) => (
+              <div key={idx} className="shrink-0 w-72 snap-start bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
+                    {slot.time}
+                  </span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded border flex items-center gap-1 ${slot.statusClass}`}>
+                    {idx === 0 && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                    {slot.status}
+                  </span>
+                </div>
+                <h4 className="font-extrabold text-base text-[#2C2623]">{slot.title}</h4>
+                <p className="text-xs text-[#6C5E57] leading-relaxed">{slot.desc}</p>
               </div>
-              <h4 className="font-extrabold text-base text-[#2C2623]">시그니처 고메 소금빵 & 우유 식빵</h4>
-              <p className="text-xs text-[#6C5E57] leading-relaxed">
-                출근길을 채우는 따뜻한 고소함. 천일염 버터 풍미가 가장 깊은 시간대입니다.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3 relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
-                  2차 출하 11:30
-                </span>
-                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                  판매 진행 중
-                </span>
-              </div>
-              <h4 className="font-extrabold text-base text-[#2C2623]">앙버터 스콘 & 크루아상 라인</h4>
-              <p className="text-xs text-[#6C5E57] leading-relaxed">
-                점심시간 디저트로 인기 높은 바삭한 결의 페이스트리와 프리미엄 스콘입니다.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-[#EADFCF] shadow-2xs space-y-3 relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-[#8B5E3C] bg-[#F5EFE6] px-3 py-1 rounded-full">
-                  3차 출하 14:30
-                </span>
-                <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
-                  오픈 대기중
-                </span>
-              </div>
-              <h4 className="font-extrabold text-base text-[#2C2623]">제주 말차 타르트 & 딸기 케이크</h4>
-              <p className="text-xs text-[#6C5E57] leading-relaxed">
-                오후 티타임을 완성하는 수제 케이크 및 선물용 디저트 라인업입니다.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>

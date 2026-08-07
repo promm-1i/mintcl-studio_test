@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
 import { 
   Smartphone, 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export const AppSamplePage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<'ai' | 'kakao' | 'habit' | 'voice'>('ai');
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
@@ -144,7 +146,12 @@ export const AppSamplePage: React.FC = () => {
           </div>
 
           {/* Smartphone Mockup */}
-          <div className="lg:col-span-5 flex justify-center">
+          <motion.div
+            className="lg:col-span-5 flex justify-center"
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 30, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+          >
             <div className="w-[280px] sm:w-[320px] rounded-[40px] border-8 border-slate-800 bg-slate-900 shadow-2xl p-4 overflow-hidden relative space-y-4">
               {/* Phone Speaker & Notch */}
               <div className="w-24 h-4 bg-slate-800 rounded-full mx-auto" />
@@ -192,7 +199,7 @@ export const AppSamplePage: React.FC = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -233,36 +240,47 @@ export const AppSamplePage: React.FC = () => {
           ))}
         </div>
 
-        {/* Feature Display Box */}
-        <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-4">
-            <span className="text-xs font-bold text-[#818CF8] uppercase tracking-wider block">
-              Feature Details
-            </span>
-            <h4 className="text-xl sm:text-2xl font-bold text-white">
-              {currentFeat.title}
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              {currentFeat.desc}
-            </p>
+        {/* Feature Display Box — content swaps with motion on each tab, product-interaction focused */}
+        <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+              initial={prefersReducedMotion ? undefined : { opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0, x: -16 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            >
+              <div className="lg:col-span-7 space-y-4">
+                <span className="text-xs font-bold text-[#818CF8] uppercase tracking-wider block">
+                  Feature Details
+                </span>
+                <h4 className="text-xl sm:text-2xl font-bold text-white">
+                  {currentFeat.title}
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  {currentFeat.desc}
+                </p>
 
-            <div className="space-y-2 pt-2">
-              {currentFeat.points.map((pt, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
-                  <CheckCircle className="w-4 h-4 text-[#818CF8]" />
-                  <span>{pt}</span>
+                <div className="space-y-2 pt-2">
+                  {currentFeat.points.map((pt, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
+                      <CheckCircle className="w-4 h-4 text-[#818CF8]" />
+                      <span>{pt}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          <div className="lg:col-span-5 bg-[#1E1B4B] p-6 rounded-2xl border border-slate-800 text-center space-y-3">
-            <Smartphone className="w-10 h-10 text-[#818CF8] mx-auto" />
-            <h5 className="font-bold text-sm text-white">{currentFeat.screenDesc}</h5>
-            <p className="text-xs text-slate-400">
-              실제 개발 시 위 기능 모듈을 모바일 앱 및 웹 서비스로 구현해 드립니다.
-            </p>
-          </div>
+              <div className="lg:col-span-5 bg-[#1E1B4B] p-6 rounded-2xl border border-slate-800 text-center space-y-3">
+                <Smartphone className="w-10 h-10 text-[#818CF8] mx-auto" />
+                <h5 className="font-bold text-sm text-white">{currentFeat.screenDesc}</h5>
+                <p className="text-xs text-slate-400">
+                  실제 개발 시 위 기능 모듈을 모바일 앱 및 웹 서비스로 구현해 드립니다.
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
