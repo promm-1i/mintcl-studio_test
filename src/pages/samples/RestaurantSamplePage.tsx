@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useState, useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
 import { 
   Utensils, 
@@ -16,8 +16,17 @@ import {
   Heart
 } from 'lucide-react';
 
+const SAMPLE_REVIEWS = [
+  { text: '숯불 향이 진하고 룸이 조용해서 회식하기 좋았어요.', tag: '회식 방문' },
+  { text: '가족 모임으로 방문했는데 아이 의자도 바로 챙겨주셨습니다.', tag: '가족 모임' },
+  { text: '주차가 편해서 부담 없이 갈 수 있는 고깃집이에요.', tag: '주차 편의' },
+];
+
 export const RestaurantSamplePage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroParallaxY = useTransform(scrollYProgress, [0, 1], [0, 50]);
   const [activeCategory, setActiveCategory] = useState<'beef' | 'pork' | 'lunch' | 'drink'>('beef');
   const [reservationDone, setReservationDone] = useState(false);
   const [resData, setResData] = useState({
@@ -136,9 +145,15 @@ export const RestaurantSamplePage: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Hero Section */}
-      <section className="relative bg-slate-950 text-white py-16 lg:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80')` }} />
+      {/* Main Hero Section — soft bounded parallax on the food photography */}
+      <section ref={heroRef} className="relative bg-slate-950 text-white py-16 lg:py-24 overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-cover bg-center opacity-40 scale-110"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80')`,
+            y: prefersReducedMotion ? 0 : heroParallaxY,
+          }}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
 
         <motion.div
@@ -163,13 +178,14 @@ export const RestaurantSamplePage: React.FC = () => {
           </p>
 
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-            <a
+            <motion.a
               href="#reservation-section"
+              whileTap={{ scale: 0.97 }}
               className="px-8 py-4 rounded-xl font-extrabold text-sm sm:text-base text-slate-950 bg-amber-400 hover:bg-amber-300 shadow-xl transition-all flex items-center gap-2"
             >
               <Calendar className="w-5 h-5" />
               <span>실시간 룸 & 테이블 예약</span>
-            </a>
+            </motion.a>
             <a
               href="#menu-section"
               className="px-6 py-4 rounded-xl font-bold text-sm sm:text-base text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center gap-2"
@@ -210,35 +226,41 @@ export const RestaurantSamplePage: React.FC = () => {
           ))}
         </div>
 
-        {/* Menu Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Menu Cards — 2-column on mobile, hover reveals detail over the image */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {menuItems.filter(m => activeCategory === 'beef' ? (m.cat === 'beef') : (m.cat === activeCategory)).map((item, idx) => (
-            <div key={idx} className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col sm:flex-row">
-              <div className="sm:w-2/5 aspect-[4/3] bg-slate-900 overflow-hidden">
-                <img src={item.image} alt={item.name} className="w-full h-full object-cover hover:scale-105 transition-transform" />
-              </div>
-              <div className="sm:w-3/5 p-6 space-y-3 flex flex-col justify-between">
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-red-100 text-red-800">
-                      {item.badge}
-                    </span>
-                    <span className="text-lg font-extrabold text-red-700">{item.price}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 pt-1">{item.name}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+            <motion.div
+              key={idx}
+              className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+              initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: (idx % 3) * 0.08 }}
+            >
+              <div className="relative aspect-square sm:aspect-[4/3] bg-slate-900 overflow-hidden">
+                <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 to-transparent p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <p className="text-[10px] sm:text-xs text-slate-200 leading-relaxed line-clamp-2">{item.desc}</p>
                 </div>
-
-                <div className="pt-2 flex justify-end">
+                <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800">
+                  {item.badge}
+                </span>
+              </div>
+              <div className="p-3 sm:p-5 space-y-1.5">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-sm sm:text-lg font-bold text-slate-900 truncate">{item.name}</h3>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm sm:text-lg font-extrabold text-red-700">{item.price}</span>
                   <a
                     href="#reservation-section"
-                    className="text-xs font-bold text-red-800 hover:underline flex items-center gap-1"
+                    className="text-[10px] sm:text-xs font-bold text-red-800 hover:underline shrink-0"
                   >
-                    <span>예약 시 메뉴 지정</span> &gt;
+                    지정예약 &gt;
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -267,6 +289,29 @@ export const RestaurantSamplePage: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Review Mood — illustrative example cards, explicitly labeled (not real reviews) */}
+      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+        <div className="flex items-center justify-between gap-3 mb-8">
+          <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">방문 후기 분위기 (예시)</h3>
+          <span className="text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded shrink-0">실제 후기 아님 · 연출 예시</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {SAMPLE_REVIEWS.map((r, idx) => (
+            <motion.div
+              key={idx}
+              className="bg-white p-5 rounded-2xl border border-slate-200 space-y-2"
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
+            >
+              <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">{r.tag}</span>
+              <p className="text-sm text-slate-700 leading-relaxed">"{r.text}"</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
@@ -371,23 +416,37 @@ export const RestaurantSamplePage: React.FC = () => {
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
+                whileTap={{ scale: 0.98 }}
                 className="w-full py-4 rounded-xl font-extrabold text-base text-white bg-red-800 hover:bg-red-700 shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <Send className="w-5 h-5" />
                 <span>예약 신청 완료하기</span>
-              </button>
+              </motion.button>
             </form>
           )}
         </div>
       </section>
 
-      {/* Location */}
+      {/* Location CTA */}
       <section id="location-section" className="py-12 bg-white border-t border-slate-200 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-          <h3 className="text-xl font-bold text-slate-900">위치 및 발렛 파킹 안내</h3>
-          <p className="text-xs text-slate-600">서울특별시 서초구 반포대로 144 | 전화: 02-544-9292 | 매일 11:30~22:00 (명절 당일만 휴무)</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+          <div className="space-y-1">
+            <h3 className="text-xl font-bold text-slate-900">위치 및 발렛 파킹 안내</h3>
+            <p className="text-xs text-slate-600">서울특별시 서초구 반포대로 144 | 매일 11:30~22:00 (명절 당일만 휴무)</p>
+          </div>
+          <div className="flex flex-wrap gap-2.5">
+            <a href="tel:02-544-9292" className="px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 transition-colors flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5" /> 전화 문의
+            </a>
+            <a href="#reservation-section" className="px-4 py-2.5 rounded-lg text-xs font-bold bg-[#FEE500] text-[#3C1E1E] hover:opacity-90 transition-opacity flex items-center gap-1.5">
+              카카오톡 문의
+            </a>
+            <a href="#" onClick={(e) => { e.preventDefault(); alert('네이버 지도로 연결됩니다.'); }} className="px-4 py-2.5 rounded-lg text-xs font-bold bg-[#03C75A] text-white hover:opacity-90 transition-opacity flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5" /> 네이버 지도
+            </a>
+          </div>
         </div>
       </section>
 

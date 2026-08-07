@@ -13,7 +13,7 @@ import {
 
 export const InteriorSamplePage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'apartment' | 'commercial' | 'office'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'apartment' | 'commercial' | 'office' | 'kitchen' | 'bathroom'>('all');
   const [consultSubmitted, setConsultSubmitted] = useState(false);
   const [pyung, setPyung] = useState(34);
   const [formData, setFormData] = useState({
@@ -35,46 +35,80 @@ export const InteriorSamplePage: React.FC = () => {
     {
       id: 1,
       category: 'apartment',
+      spaceType: '주거 인테리어',
       title: '반포 자이 34평 모던 우드 리노베이션',
+      description: '노후 아파트를 밝고 고급스러운 패밀리 하우스로 재구성',
       location: '서울 서초구 반포동',
       area: '34평 (112㎡)',
       style: '워밍 화이트 & 히든 도어 라인조명',
       img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
       beforeImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
-      tags: ['무몰딩 시공', '히든도어', '라인조명', '광폭 원목마루'],
+      tags: ['주거공간', '리모델링', '우드톤'],
     },
     {
       id: 2,
       category: 'commercial',
+      spaceType: '상가 인테리어',
       title: '성수동 베이커리 카페 인테리어',
+      description: '브랜드 분위기와 동선을 고려한 소형 상업공간 설계',
       location: '서울 성동구 성수동',
       area: '42평 (138㎡)',
       style: '노출 콘크리트 & 내추럴 목재 바',
       img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
       beforeImg: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
-      tags: ['커스텀 바 카운터', '조도 컨트롤', '노출천장'],
+      tags: ['상업공간', '카페무드', '동선설계'],
     },
     {
       id: 3,
-      category: 'apartment',
-      title: '마포 프레스티지 자이 42평 아크릴릭 리빙',
-      location: '서울 마포구 염리동',
-      area: '42평 (138㎡)',
-      style: '미니멀 그레이 & 세라믹 아일랜드',
-      img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
-      beforeImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
-      tags: ['대형 아일랜드 주방', '간접조명', '600각 포세린 타일'],
-    },
-    {
-      id: 4,
       category: 'office',
+      spaceType: '사무공간',
       title: '판교 테크노밸리 IT 스튜디오 라운지',
+      description: '직원 휴식과 미팅을 함께 고려한 복합 라운지 공간',
       location: '경기도 성남시 분당구',
       area: '65평 (214㎡)',
       style: '모듈러 스마트 오피스',
       img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
       beforeImg: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
-      tags: ['음향 흡음재', '유리 파티션', '집중 회의실'],
+      tags: ['오피스', '라운지', '모던'],
+    },
+    {
+      id: 4,
+      category: 'kitchen',
+      spaceType: '주방 · 다이닝',
+      title: '마포 프레스티지 자이 42평 아일랜드 키친',
+      description: '수납, 조명, 동선을 함께 개선한 실용적인 주방 공간',
+      location: '서울 마포구 염리동',
+      area: '42평 (138㎡)',
+      style: '미니멀 그레이 & 세라믹 아일랜드',
+      img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
+      tags: ['주방', '수납', '밝은톤'],
+    },
+    {
+      id: 5,
+      category: 'bathroom',
+      spaceType: '욕실',
+      title: '한남동 하이엔드 빌라 호텔형 욕실',
+      description: '작은 공간에서도 고급감을 느낄 수 있는 욕실 리뉴얼',
+      location: '서울 용산구 한남동',
+      area: '3.5평 (11㎡)',
+      style: '다크 포세린 타일 & 매입 조명',
+      img: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
+      tags: ['욕실', '타일', '호텔무드'],
+    },
+    {
+      id: 6,
+      category: 'commercial',
+      spaceType: '상업시설',
+      title: '홍대입구역 신축 상가 내부 마감',
+      description: '입점 전 기본 마감부터 브랜드 적용까지 고려한 시공 사례',
+      location: '서울 마포구 동교동',
+      area: '28평 (92㎡)',
+      style: '노출 천장 & 블랙 메탈 프레임',
+      img: 'https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1200&q=80',
+      beforeImg: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
+      tags: ['상가', '마감공사', '실용설계'],
     },
   ];
 
@@ -184,12 +218,14 @@ export const InteriorSamplePage: React.FC = () => {
             </h3>
           </div>
 
-          <div className="flex gap-2 text-xs">
+          <div className="flex flex-wrap gap-2 text-xs">
             {[
               { id: 'all', label: '전체 보기' },
-              { id: 'apartment', label: '아파트 리모델링' },
+              { id: 'apartment', label: '아파트' },
               { id: 'commercial', label: '상가 / 카페' },
-              { id: 'office', label: '사무실 / 오피스' },
+              { id: 'office', label: '사무실' },
+              { id: 'kitchen', label: '주방 · 다이닝' },
+              { id: 'bathroom', label: '욕실' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -206,8 +242,8 @@ export const InteriorSamplePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((p) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((p, idx) => {
             const isBefore = !!beforeAfterState[p.id];
             return (
               <motion.div
@@ -216,7 +252,7 @@ export const InteriorSamplePage: React.FC = () => {
                 initial={prefersReducedMotion ? undefined : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
                 whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.7, ease: 'easeOut' }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: (idx % 3) * 0.12 }}
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#141414]">
                   <img
@@ -252,8 +288,8 @@ export const InteriorSamplePage: React.FC = () => {
 
                 <div className="p-6 space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[11px] text-[#D4B993] font-bold block">
-                      {p.location}
+                    <span className="text-[11px] text-[#D4B993] font-bold uppercase tracking-wider block">
+                      {p.spaceType}
                     </span>
                     <span className="text-[10px] text-slate-400 border border-slate-700 px-2 py-0.5">
                       {isBefore ? '⚠️ 철거 전 상태' : '✓ 완공 포트폴리오'}
@@ -262,13 +298,13 @@ export const InteriorSamplePage: React.FC = () => {
                   <h4 className="text-lg font-bold text-white group-hover:text-[#D4B993] transition-colors">
                     {p.title}
                   </h4>
-                  <p className="text-xs text-slate-400 font-light">
-                    컨셉: {p.style}
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    {p.description}
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 pt-2">
-                    {p.tags.map((t, idx) => (
-                      <span key={idx} className="text-[10px] bg-[#2A2A2A] text-slate-300 px-2 py-0.5 border border-slate-800">
+                    {p.tags.slice(0, 3).map((t, tagIdx) => (
+                      <span key={tagIdx} className="text-[10px] bg-[#2A2A2A] text-slate-300 px-2 py-0.5 border border-slate-800">
                         #{t}
                       </span>
                     ))}

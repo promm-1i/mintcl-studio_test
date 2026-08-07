@@ -40,12 +40,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               Web Design Studio
             </span>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.25] tracking-tight">
-              민트클은 소상공인과 기업의<br />
-              홈페이지를 제작하는 스튜디오입니다
+            <h1 className="text-[1.75rem] sm:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.3] sm:leading-[1.25] tracking-tight break-keep max-w-[720px]">
+              민트클은<br />
+              소상공인과 기업의 홈페이지를 제작하는<br />
+              웹스튜디오입니다
             </h1>
 
-            <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-md">
+            <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-md break-keep">
               업종에 맞는 구조와 디자인으로 직접 만든 결과물을 포트폴리오로 먼저 보여드립니다.
               아래 샘플을 실제로 눌러보고, 원하는 스타일로 견적을 문의하세요.
             </p>

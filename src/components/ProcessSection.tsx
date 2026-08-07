@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { WORK_SCOPE_SUMMARY } from '../data/processData';
 import { SectionId } from '../types';
 import { 
@@ -18,53 +18,54 @@ interface ProcessSectionProps {
 const PROCESS_SUMMARY_STEPS = [
   {
     step: '01',
-    title: '상담 & 견적',
+    title: '문의 접수',
     duration: '1~2일',
-    desc: '제작 목적과 필요한 페이지를 파악하고, 명확한 예상 견적과 일정을 안내해 드립니다.',
+    desc: '업종, 목적, 필요한 기능을 확인합니다.',
     result: '견적서 및 일정 안내',
   },
   {
     step: '02',
-    title: '기획 & 원고',
+    title: '구성 정리',
     duration: '2~3일',
-    desc: '사이트 구조(IA)를 설계하고, 필요한 로고·텍스트·이미지 등 자료를 정리합니다.',
+    desc: '페이지 수, 참고 디자인, 자료를 정리합니다.',
     result: '화면 구조도(와이어프레임)',
   },
   {
     step: '03',
-    title: '디자인 확정',
+    title: '시안 제작',
     duration: '3~5일',
-    desc: '브랜드 컬러에 맞춘 PC 및 모바일 화면 시안을 제작하여 고객님과 검토합니다.',
+    desc: '메인 화면과 전체 분위기를 제안합니다.',
     result: '디자인 시안',
   },
   {
     step: '04',
-    title: '반응형 개발',
+    title: '제작 · 수정',
     duration: '3~5일',
-    desc: '모바일 반응형 웹 개발, 검색엔진(SEO) 수집 설정 및 문의폼을 연동합니다.',
+    desc: '모바일 반응형과 주요 기능을 구현합니다.',
     result: '테스트 연결 링크',
   },
   {
     step: '05',
-    title: '오픈 & A/S',
+    title: '배포 · 안내',
     duration: '1~2일',
-    desc: '고객 도메인 연결 및 최종 검수를 진행하며, 오픈 후 1개월간 무상 A/S를 지원합니다.',
+    desc: '도메인 연결, 사용 안내, 유지보수를 협의합니다.',
     result: '정식 오픈 & 보증 시작',
   },
 ];
 
 export const ProcessSection: React.FC<ProcessSectionProps> = ({ onNavigate }) => {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <section id="process-section" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header with Motion */}
-        <motion.div 
+        <motion.div
           className="text-center max-w-3xl mx-auto space-y-3 mb-10"
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-teal-100/80 text-teal-900 border border-teal-200">
             <Sparkles className="w-3.5 h-3.5 text-teal-600" />
@@ -83,11 +84,11 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onNavigate }) =>
           {PROCESS_SUMMARY_STEPS.map((step, idx) => (
             <motion.div
               key={step.step}
-              className="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-4 hover:border-teal-500 hover:shadow-md transition-all relative group"
-              initial={{ opacity: 0, y: 30 }}
+              className="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-4 hover:border-teal-500 hover:shadow-md hover:-translate-y-1 transition-all relative group"
+              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
             >
               <div className="space-y-2">
                 {/* Step Header */}
@@ -130,10 +131,10 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onNavigate }) =>
         {/* Work Scope Breakdown with Motion */}
         <motion.div 
           className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 text-left shadow-2xs"
-          initial={{ opacity: 0, y: 35, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div className="flex items-center gap-2">

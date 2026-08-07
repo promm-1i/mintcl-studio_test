@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { FAQ_DATA } from '../data/faqData';
 import { SectionId } from '../types';
 import { 
@@ -16,6 +16,7 @@ interface FaqSectionProps {
 }
 
 export const FaqSection: React.FC<FaqSectionProps> = ({ onNavigate }) => {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [expandedId, setExpandedId] = useState<string | null>('faq-1');
@@ -48,10 +49,10 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onNavigate }) => {
         {/* Section Header with Motion */}
         <motion.div 
           className="text-center max-w-2xl mx-auto space-y-3 mb-10"
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-teal-50 text-teal-800 border border-teal-200">
             <span>자주 묻는 질문</span>
@@ -67,10 +68,10 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onNavigate }) => {
         {/* Search Bar & Category Controls with Motion */}
         <motion.div 
           className="space-y-4 mb-8"
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
           
           {/* Search Input */}
@@ -109,10 +110,10 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onNavigate }) => {
         {/* FAQ Accordion List with Motion */}
         <motion.div 
           className="space-y-3 text-left"
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
           {filteredFaqs.length === 0 ? (
             <div className="p-8 bg-white rounded-2xl border border-slate-200 text-center space-y-3">
@@ -154,18 +155,28 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onNavigate }) => {
                     }`} />
                   </button>
 
-                  {isExpanded && (
-                    <div className="px-5 pb-5 pt-1 border-t border-slate-100 bg-slate-50/50">
-                      <div className="flex items-start gap-3">
-                        <span className="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                          A
-                        </span>
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        initial={prefersReducedMotion ? undefined : { height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={prefersReducedMotion ? undefined : { height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 pt-1 border-t border-slate-100 bg-slate-50/50">
+                          <div className="flex items-start gap-3">
+                            <span className="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                              A
+                            </span>
+                            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
+                              {faq.answer}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })
@@ -175,10 +186,10 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onNavigate }) => {
         {/* Bottom Contact Prompt Box with Motion */}
         <motion.div 
           className="mt-12 p-6 bg-white rounded-2xl border border-slate-200/90 shadow-2xs text-center space-y-3"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
           <MessageSquare className="w-7 h-7 text-teal-600 mx-auto" />
           <h3 className="text-base font-bold text-slate-900">

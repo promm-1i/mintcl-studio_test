@@ -60,6 +60,7 @@ export const BeautySamplePage: React.FC = () => {
   const serviceCategories = [
     {
       title: 'CUT & STYLING',
+      img: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80',
       items: [
         { name: '디자이너 퍼스널 컷', price: '35,000원', time: '45분' },
         { name: '대표원장 1:1 두상맞춤 컷', price: '45,000원', time: '60분' },
@@ -68,6 +69,7 @@ export const BeautySamplePage: React.FC = () => {
     },
     {
       title: 'PERM & CLINIC',
+      img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
       items: [
         { name: '아윤채 리페어 열펌 + 클리닉', price: '160,000원', time: '120분' },
         { name: '엘레강스 빌드펌 / 허쉬 펌', price: '180,000원', time: '150분' },
@@ -76,11 +78,27 @@ export const BeautySamplePage: React.FC = () => {
     },
     {
       title: 'COLOR & SPA',
+      img: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=800&q=80',
       items: [
         { name: '퍼스널 톤다운 / 톤업 컬러', price: '120,000원', time: '90분' },
         { name: '프리미엄 무손상 탈색 (1회)', price: '140,000원', time: '90분' },
         { name: '두피 스파 & 헤어 디톡스 케어', price: '80,000원', time: '50분' },
       ],
+    },
+  ];
+
+  const beforeAfterPairs = [
+    {
+      id: 1,
+      label: '다크 브라운 → 애쉬 베이지',
+      before: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
+      after: 'https://images.unsplash.com/photo-1500840216050-6ffa99d75160?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 2,
+      label: '단발 → 레이어드 웨이브',
+      before: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=800&q=80',
+      after: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80',
     },
   ];
 
@@ -116,9 +134,8 @@ export const BeautySamplePage: React.FC = () => {
           </div>
 
           <nav className="hidden md:flex items-center gap-7 text-xs font-bold text-[#881337]">
-            <a href="#about" className="hover:text-[#E11D48] transition-colors">살롱 소개</a>
-            <a href="#stylists" className="hover:text-[#E11D48] transition-colors">디자이너 프로필</a>
-            <a href="#menu" className="hover:text-[#E11D48] transition-colors">정찰제 요금표</a>
+            <a href="#menu" className="hover:text-[#E11D48] transition-colors">시그니처 스타일</a>
+            <a href="#stylists" className="hover:text-[#E11D48] transition-colors">디자이너 픽</a>
             <a href="#booking" className="hover:text-[#E11D48] transition-colors">실시간 간편 예약</a>
           </nav>
 
@@ -135,7 +152,12 @@ export const BeautySamplePage: React.FC = () => {
       <section className="relative py-16 lg:py-24 px-6 bg-gradient-to-b from-[#FFE4E6]/40 via-[#FFFDFB] to-[#FFFDFB] text-left">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
-          <div className="lg:col-span-7 space-y-6">
+          <motion.div
+            className="lg:col-span-7 space-y-6"
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#FFE4E6] text-[#9F1239] border border-[#FECDD3]">
               <Sparkles className="w-3.5 h-3.5 text-[#E11D48]" />
               <span>네이버 / 카카오 1:1 간편 예약 지원</span>
@@ -168,19 +190,19 @@ export const BeautySamplePage: React.FC = () => {
 
             <div className="pt-6 border-t border-[#FECDD3] grid grid-cols-3 gap-4 text-xs font-sans">
               <div>
-                <span className="font-extrabold text-[#E11D48] text-base block">4.95 ★</span>
-                <span className="text-[#7A525B]">네이버 실사용자 평점</span>
+                <span className="font-extrabold text-[#E11D48] text-base block">1:1 지정제</span>
+                <span className="text-[#7A525B]">디자이너 전담 예약</span>
               </div>
               <div>
-                <span className="font-extrabold text-[#E11D48] text-base block">100%</span>
-                <span className="text-[#7A525B]">투명 정찰제 시술</span>
+                <span className="font-extrabold text-[#E11D48] text-base block">투명 정찰제</span>
+                <span className="text-[#7A525B]">시술 전 가격 안내</span>
               </div>
               <div>
                 <span className="font-extrabold text-[#E11D48] text-base block">아윤채 전용</span>
                 <span className="text-[#7A525B]">프리미엄 두피 케어</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           <motion.div
             className="lg:col-span-5 relative"
@@ -207,79 +229,41 @@ export const BeautySamplePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Stylist Section */}
-      <section id="stylists" className="py-20 px-6 max-w-6xl mx-auto text-left">
-        <div className="text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#E11D48] uppercase tracking-widest block">
-            Hair Designers
-          </span>
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#4A2E35]">
-            전담 헤어 디자이너 프로필
-          </h3>
-          <p className="text-xs text-[#7A525B]">
-            각 분야 전문 디자이너가 고객님의 첫 스타일 상담부터 전 과정을 1:1 전담합니다.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {stylists.map((st) => (
-            <div key={st.id} className="bg-white rounded-3xl p-6 border border-[#FFE4E6] shadow-2xs space-y-4 text-center">
-              <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-2 border-[#E11D48]">
-                <img src={st.img} alt={st.name} loading="lazy" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-[#E11D48] bg-[#FFE4E6] px-2.5 py-0.5 rounded-full">
-                  {st.badge}
-                </span>
-                <h4 className="text-base font-bold text-[#4A2E35] mt-1.5">{st.name}</h4>
-                <span className="text-xs text-[#881337] font-semibold block">{st.role}</span>
-              </div>
-              <p className="text-xs text-[#7A525B] leading-relaxed">
-                {st.desc}
-              </p>
-              <button
-                onClick={() => {
-                  setFormData({ ...formData, stylist: st.name });
-                  const el = document.getElementById('booking');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full py-2.5 rounded-xl font-bold text-xs text-[#E11D48] bg-[#FFFDFB] border border-[#FECDD3] hover:bg-[#FFE4E6] transition-colors cursor-pointer"
-              >
-                {st.name} 지정 예약
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Menu & Pricing */}
+      {/* Signature Style — horizontal scroll cards, not a pricing table */}
       <section id="menu" className="py-20 px-6 bg-white border-y border-[#FFE4E6] text-left">
-        <div className="max-w-5xl mx-auto space-y-10">
-          <div className="text-center space-y-2">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="space-y-2">
             <span className="text-xs font-bold text-[#E11D48] uppercase tracking-widest block">
-              Price List
+              Signature Style
             </span>
             <h3 className="text-2xl sm:text-3xl font-bold text-[#4A2E35]">
-              투명 정찰제 시술 요금표
+              컷 · 펌 · 컬러 · 클리닉
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex gap-6 overflow-x-auto pb-3 -mx-6 px-6 snap-x snap-mandatory">
             {serviceCategories.map((cat, idx) => (
-              <div key={idx} className="bg-[#FFFDFB] p-6 rounded-3xl border border-[#FFE4E6] space-y-4">
-                <h4 className="font-bold text-xs text-[#E11D48] tracking-wider border-b border-[#FECDD3] pb-2 uppercase">
-                  {cat.title}
-                </h4>
-                <div className="space-y-4">
-                  {cat.items.map((item, i) => (
-                    <div key={i} className="space-y-1">
-                      <div className="flex justify-between font-bold text-xs text-[#4A2E35]">
-                        <span>{item.name}</span>
-                        <span className="text-[#E11D48]">{item.price}</span>
+              <div key={idx} className="shrink-0 w-72 snap-start bg-[#FFFDFB] rounded-3xl border border-[#FFE4E6] overflow-hidden group">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={cat.img}
+                    alt={cat.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-5 space-y-3">
+                  <h4 className="font-bold text-xs text-[#E11D48] tracking-wider uppercase">
+                    {cat.title}
+                  </h4>
+                  <div className="space-y-2">
+                    {cat.items.slice(0, 2).map((item, i) => (
+                      <div key={i} className="flex justify-between text-xs text-[#4A2E35]">
+                        <span className="font-semibold">{item.name}</span>
+                        <span className="text-[#E11D48] font-bold shrink-0 pl-2">{item.price}</span>
                       </div>
-                      <span className="text-[10px] text-slate-400 block">소요시간: {item.time}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -287,9 +271,82 @@ export const BeautySamplePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Booking Form */}
+      {/* Before & After */}
+      <section className="py-20 px-6 max-w-6xl mx-auto text-left">
+        <div className="space-y-2 mb-10">
+          <span className="text-xs font-bold text-[#E11D48] uppercase tracking-widest block">
+            Before &amp; After
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-bold text-[#4A2E35]">
+            시술 전후 비교
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {beforeAfterPairs.map((pair) => (
+            <div key={pair.id} className="rounded-3xl overflow-hidden border border-[#FFE4E6] bg-white">
+              <div className="grid grid-cols-2">
+                <div className="relative aspect-square overflow-hidden">
+                  <img src={pair.before} alt="시술 전" loading="lazy" className="w-full h-full object-cover" />
+                  <span className="absolute bottom-2 left-2 text-[10px] font-bold text-white bg-black/50 px-2 py-0.5 rounded">BEFORE</span>
+                </div>
+                <div className="relative aspect-square overflow-hidden">
+                  <img src={pair.after} alt="시술 후" loading="lazy" className="w-full h-full object-cover" />
+                  <span className="absolute bottom-2 right-2 text-[10px] font-bold text-white bg-[#E11D48] px-2 py-0.5 rounded">AFTER</span>
+                </div>
+              </div>
+              <p className="p-4 text-xs font-semibold text-[#4A2E35] text-center">{pair.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Designer Pick — Instagram-style square grid */}
+      <section id="stylists" className="py-20 px-6 bg-white border-y border-[#FFE4E6] text-left">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-[#E11D48] uppercase tracking-widest block">
+              Designer Pick
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#4A2E35]">
+              디자이너가 추천하는 스타일
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+            {stylists.map((st) => (
+              <button
+                key={st.id}
+                onClick={() => {
+                  setFormData({ ...formData, stylist: st.name });
+                  const el = document.getElementById('booking');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="relative aspect-square overflow-hidden group cursor-pointer"
+                title={`${st.name} 지정 예약`}
+              >
+                <img src={st.img} alt={st.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-end p-3 opacity-0 group-hover:opacity-100">
+                  <div className="text-left translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <span className="text-[10px] font-bold text-[#FFE4E6] block">{st.badge}</span>
+                    <span className="text-xs font-bold text-white">{st.name}</span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reservation CTA + Booking Form */}
       <section id="booking" className="py-20 px-6 max-w-3xl mx-auto text-left">
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#FFE4E6] shadow-xl space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+          <a href="#booking" className="py-3.5 rounded-xl text-xs font-bold text-center bg-[#03C75A] text-white hover:opacity-90 transition-opacity">네이버예약</a>
+          <a href="tel:02-333-7788" className="py-3.5 rounded-xl text-xs font-bold text-center bg-[#FEE500] text-[#3C1E1E] hover:opacity-90 transition-opacity">전화 상담</a>
+          <button onClick={() => { const el = document.getElementById('booking-form'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="py-3.5 rounded-xl text-xs font-bold text-center bg-[#E11D48] text-white hover:bg-[#BE123C] transition-colors cursor-pointer">카카오톡 문의</button>
+        </div>
+
+        <div id="booking-form" className="bg-white rounded-3xl p-8 sm:p-12 border border-[#FFE4E6] shadow-xl space-y-6">
           <div className="text-center space-y-2">
             <span className="text-xs font-bold text-[#E11D48] uppercase tracking-widest block">
               Online Booking

@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { SampleHeaderBanner } from '../../components/SampleHeaderBanner';
-import { 
-  Building2, 
-  Clock, 
-  MapPin, 
-  Phone, 
-  Calendar, 
-  CheckCircle2, 
-  Award, 
-  ShieldCheck, 
-  Stethoscope, 
-  Users, 
-  Activity, 
-  FileText, 
+import {
+  Building2,
+  Clock,
+  MapPin,
+  Phone,
+  Calendar,
+  CheckCircle2,
+  Award,
+  ShieldCheck,
+  Stethoscope,
+  Users,
+  Activity,
+  FileText,
   Sparkles,
   ChevronRight,
+  ChevronDown,
   X,
-  Send
+  Send,
+  HeartHandshake
 } from 'lucide-react';
 
+const HOSPITAL_FAQS = [
+  { q: '초진인데 바로 진료가 가능한가요?', a: '네, 초진 환자도 온라인 예약 또는 전화로 바로 접수하실 수 있습니다. 방문 시 신분증만 지참해 주세요.' },
+  { q: '예약 없이 방문해도 되나요?', a: '예약 없이도 방문 진료가 가능하지만, 대기 시간을 줄이시려면 온라인 예약을 권장해 드립니다.' },
+  { q: '주차는 어떻게 이용하나요?', a: '건물 지하 2층~5층 자주식 주차장을 이용하실 수 있으며, 진료 시 2시간 무료 주차권을 드립니다.' },
+  { q: '상담만 받아볼 수도 있나요?', a: '네, 치료 전 증상 상담만 원하시는 경우에도 예약 시 메모란에 남겨주시면 안내해 드립니다.' },
+];
+
 export const HospitalSamplePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'depts' | 'doctors' | 'equip' | 'booking' | 'location'>('depts');
+  const prefersReducedMotion = useReducedMotion();
+  const [activeTab, setActiveTab] = useState<'depts' | 'trust' | 'location' | 'doctors' | 'equip' | 'booking'>('depts');
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [selectedDoctor, setSelectedDoctor] = useState<string>('김진우 대표원장');
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookingData, setBookingData] = useState({
@@ -38,7 +50,7 @@ export const HospitalSamplePage: React.FC = () => {
       id: 'spine',
       title: '척추·관절 센터',
       subtitle: '비수술 맞춤 주사치료 및 정밀 진단',
-      desc: '허리디스크, 목디스크, 퇴행성 관절염, 오십견 대상 1:1 비수술 맞춤 치료를 진행합니다.',
+      desc: '허리·목디스크, 관절염 1:1 비수술 맞춤 치료',
       features: ['C-arm 실시간 영상유도 주사', '체외충격파(ESWT)', '고주파 열치료'],
       badge: '대표 센터',
       icon: Stethoscope
@@ -47,7 +59,7 @@ export const HospitalSamplePage: React.FC = () => {
       id: 'rehab',
       title: '비수술 도수·재활센터',
       subtitle: '전문 도수치료사의 1:1 맞춤 교정',
-      desc: '체형 분석 시스템 결과를 바탕으로 전문 도수치료사가 근골격계 불균형을 다스립니다.',
+      desc: '체형 분석 기반 1:1 근골격계 교정 관리',
       features: ['3D 체형/보행 분석', '1:1 전담 도수치료실', '슬링 및 운동재활'],
       badge: '1:1 전담제',
       icon: Activity
@@ -56,7 +68,7 @@ export const HospitalSamplePage: React.FC = () => {
       id: 'internal',
       title: '건강검진 & 내과 센터',
       subtitle: '국민건강보험 공단검진 및 정밀 내시경',
-      desc: '위·대장 소화기 내시경 및 당뇨, 고혈압, 만성질환 케어를 꼼꼼하게 진행합니다.',
+      desc: '소화기 내시경 및 만성질환 정기 관리',
       features: ['당일 수면 내시경', '5대암 정밀 검진', '만성질환 맞춤 처방'],
       badge: '공단 지정',
       icon: ShieldCheck
@@ -65,7 +77,7 @@ export const HospitalSamplePage: React.FC = () => {
       id: 'pain',
       title: '통증의학과 & 수액 클리닉',
       subtitle: '만성 피로 회복 및 신경 블록 치료',
-      desc: '급성 통증 및 수면 부족, 만성 피로를 회복하는 1:1 맞춤 영양 수액실을 갖추고 있습니다.',
+      desc: '1인 프라이빗 룸의 맞춤 통증·피로 관리',
       features: ['1인 프라이빗 수액실', '마늘/메가비타민 수액', '대상포진 신경치료'],
       badge: '프라이빗 룸',
       icon: Award
@@ -168,10 +180,11 @@ export const HospitalSamplePage: React.FC = () => {
           <nav className="hidden lg:flex items-center gap-1">
             {[
               { id: 'depts', label: '진료과목 안내' },
+              { id: 'trust', label: '진료 철학' },
+              { id: 'location', label: '오시는 길' },
               { id: 'doctors', label: '의료진 소개' },
               { id: 'equip', label: '첨단 장비' },
               { id: 'booking', label: '온라인 진료예약' },
-              { id: 'location', label: '오시는 길' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -277,10 +290,11 @@ export const HospitalSamplePage: React.FC = () => {
         <div className="flex lg:hidden overflow-x-auto gap-2 pb-2">
           {[
             { id: 'depts', label: '진료과목' },
+            { id: 'trust', label: '진료 철학' },
+            { id: 'location', label: '오시는 길' },
             { id: 'doctors', label: '의료진 약력' },
             { id: 'equip', label: '첨단 장비' },
             { id: 'booking', label: '온라인 예약' },
-            { id: 'location', label: '오시는 길' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -304,12 +318,19 @@ export const HospitalSamplePage: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {departments.map((dept) => {
+              {departments.map((dept, idx) => {
                 const IconComponent = dept.icon;
                 return (
-                  <div key={dept.id} className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
+                  <motion.div
+                    key={dept.id}
+                    className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4"
+                    initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
+                  >
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center transition-transform hover:-translate-y-0.5">
                         <IconComponent className="w-6 h-6" />
                       </div>
                       <span className="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
@@ -327,14 +348,51 @@ export const HospitalSamplePage: React.FC = () => {
                     <div className="pt-3 border-t border-slate-100 space-y-1.5">
                       <span className="text-[11px] font-bold text-slate-700 block">주요 적용 시술:</span>
                       <div className="flex flex-wrap gap-1.5">
-                        {dept.features.map((f, idx) => (
-                          <span key={idx} className="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200">
+                        {dept.features.map((f, idx2) => (
+                          <span key={idx2} className="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200">
                             ✓ {f}
                           </span>
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Tab: Trust — honest, non-numeric claims only */}
+        {activeTab === 'trust' && (
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-sky-600 uppercase tracking-wider">OUR APPROACH</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">진료 철학</h2>
+              <p className="text-slate-600 text-sm">과장된 수치 대신, 실제로 지키는 진료 원칙을 안내합니다.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { icon: HeartHandshake, title: '맞춤형 상담', desc: '증상을 충분히 듣고 필요한 검사만 안내합니다.' },
+                { icon: ShieldCheck, title: '체계적 진료', desc: '정밀 진단 후 비수술을 우선 순위로 검토합니다.' },
+                { icon: Users, title: '편안한 내원 경험', desc: '대기와 예약 과정을 간결하게 안내해 드립니다.' },
+              ].map((item, idx) => {
+                const IconComponent = item.icon;
+                return (
+                  <motion.div
+                    key={idx}
+                    className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm space-y-3"
+                    initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
+                  >
+                    <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                  </motion.div>
                 );
               })}
             </div>
@@ -409,13 +467,20 @@ export const HospitalSamplePage: React.FC = () => {
                 { title: '실시간 C-arm C형간 X-선', desc: '주사 바늘 위치를 1mm 오차 없이 조준하는 미세 영상 디스플레이', tag: '주사 치료' },
                 { title: '3D 체형 및 보행 분석 시스템', desc: '골반 불균형, 척추 측만증 및 거북목 체형 데이터 분석', tag: '도수 재활' },
               ].map((eq, idx) => (
-                <div key={idx} className="bg-white rounded-2xl p-6 border border-slate-200 space-y-3">
+                <motion.div
+                  key={idx}
+                  className="bg-white rounded-2xl p-6 border border-slate-200 space-y-3"
+                  initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: idx * 0.1 }}
+                >
                   <span className="px-2.5 py-1 rounded bg-sky-100 text-sky-800 text-[11px] font-bold">
                     {eq.tag}
                   </span>
                   <h3 className="text-lg font-bold text-slate-900">{eq.title}</h3>
                   <p className="text-xs text-slate-600 leading-relaxed">{eq.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -603,6 +668,37 @@ export const HospitalSamplePage: React.FC = () => {
           </div>
         )}
 
+      </section>
+
+      {/* FAQ — quick accordion, booking/초진/주차/상담 only */}
+      <section className="py-16 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-left space-y-6">
+          <div className="space-y-1">
+            <span className="text-xs font-bold text-sky-600 uppercase tracking-wider">FAQ</span>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">자주 묻는 질문</h2>
+          </div>
+          <div className="space-y-2.5">
+            {HOSPITAL_FAQS.map((faq, idx) => {
+              const isOpen = expandedFaq === idx;
+              return (
+                <div key={idx} className={`bg-white rounded-xl border transition-colors ${isOpen ? 'border-sky-300' : 'border-slate-200'}`}>
+                  <button
+                    onClick={() => setExpandedFaq(isOpen ? null : idx)}
+                    className="w-full p-4 text-left flex items-center justify-between gap-3 cursor-pointer"
+                  >
+                    <span className="text-sm font-bold text-slate-900">{faq.q}</span>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${isOpen ? 'rotate-180 text-sky-600' : ''}`} />
+                  </button>
+                  {isOpen && (
+                    <div className="px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
