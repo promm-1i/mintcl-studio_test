@@ -243,22 +243,34 @@ export const InteriorSamplePage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.length === 0 && (
+            <p className="col-span-full text-sm text-slate-400 py-10 text-center">
+              해당 카테고리의 시공 사례를 준비 중입니다.
+            </p>
+          )}
           {filteredProjects.map((p, idx) => {
             const isBefore = !!beforeAfterState[p.id];
             return (
               <motion.div
                 key={p.id}
                 className="bg-[#1C1C1C] border border-[#2A2A2A] overflow-hidden group"
-                initial={prefersReducedMotion ? undefined : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-                whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: (idx % 3) * 0.12 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: (idx % 3) * 0.1 }}
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#141414]">
                   <img
                     src={isBefore ? p.beforeImg : p.img}
                     alt={p.title}
                     loading="lazy"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.dataset.fallback) return;
+                      target.dataset.fallback = 'true';
+                      target.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"><rect width="800" height="500" fill="#1C1C1C"/><rect x="0.5" y="0.5" width="799" height="499" fill="none" stroke="#2A2A2A"/><text x="400" y="258" font-family="sans-serif" font-size="20" fill="#D4B993" text-anchor="middle">이미지 준비 중</text></svg>'
+                      );
+                    }}
                     className="w-full h-full object-cover transition-all duration-500"
                   />
                   <div className="absolute top-3 left-3 bg-[#141414]/90 border border-[#D4B993]/40 text-[#D4B993] px-2.5 py-1 text-[10px] font-bold">
